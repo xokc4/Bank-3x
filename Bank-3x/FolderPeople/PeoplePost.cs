@@ -18,6 +18,7 @@ namespace Bank_3x.FolderPeople
         public int Credit { get; set; }//кредит
         public int CreditPrecent { get; set; }//ставка кредита
         public string Type { get; set; }//тип пользователя
+        public int ID { get; set; }
         /// <summary>
         /// конструктор по созданию клиента
         /// </summary>
@@ -30,7 +31,7 @@ namespace Bank_3x.FolderPeople
         /// <param name="credit"></param>
         /// <param name="creditPrecent"></param>
         /// <param name="type"></param>
-        public PeoplePost(string name, string lastName, string password, int cardNumber, int money, int capitalMoney, int credit, int creditPrecent, string type)
+        public PeoplePost(string name, string lastName, string password, int cardNumber, int money, int capitalMoney, int credit, int creditPrecent, string type, int iD)
         {
             this.Name = name;
             this.LastName = lastName;
@@ -41,6 +42,7 @@ namespace Bank_3x.FolderPeople
             this.Credit = credit;
             this.CreditPrecent = creditPrecent;
             this.Type = type;
+            this.ID = iD;
 
         }
         public PeoplePost()
@@ -73,20 +75,20 @@ namespace Bank_3x.FolderPeople
             int legal = random.Next(10, 12);
             int Regular = random.Next(5, 7);
             int Vip = vsego - legal - Regular;
-            int ID = 0;
+            int ID = 1;
             for (int q = 0; q < legal; q++)
             {
-                peoplePost.Add(new legalPeople($"Name_{ID}", $"last_name{ID}", "", 0, 0, 0, 0, 0, "legal"));
+                peoplePost.Add(new legalPeople($"Name_{ID}", $"last_name{ID}", "", 0, 0, 0, 0, 0, "legal", ID));
                 ID++;
             }
             for (int w = 0; w < Regular; w++)
             {
-                peoplePost.Add(new RegularPeople($"Name_{ID}", $"last_name{ID}", "", 0, 0, 0, 0, 0, "regular"));
+                peoplePost.Add(new RegularPeople($"Name_{ID}", $"last_name{ID}", "", 0, 0, 0, 0, 0, "regular", ID));
                 ID++;
             }
             for (int e = 0; e < Vip; e++)
             {
-                peoplePost.Add(new VIPpeople($"Name_{ID}", $"last_name{ID}", "", 0, 0, 0, 0, 0, "VIP"));
+                peoplePost.Add(new VIPpeople($"Name_{ID}", $"last_name{ID}", "", 0, 0, 0, 0, 0, "VIP", ID));
                 ID++;
             }
             return peoplePost;
