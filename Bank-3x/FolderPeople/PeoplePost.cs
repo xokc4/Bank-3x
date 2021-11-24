@@ -6,33 +6,108 @@ using System.Threading.Tasks;
 
 namespace Bank_3x.FolderPeople
 {
-   public class PeoplePost : Icapitalization
+   public class PeoplePost : ICreatInfPeople
     {
-        public string Name { get; set; }
-        public string LastName { get; set; }
-        public string Password { get; set; }
-        public int CardNumber { get; set; }
-
-        public PeoplePost(string name, string lastName, string password, int cardNumber)
+        Random random = new Random();//рандомайз
+        public string Name { get; set; }//имя
+        public string LastName { get; set; }//фамилия
+        public string Password { get; set; }//пароль
+        public int Money { get; set; }//деньги
+        public int CardNumber { get; set; }//счет
+        public double CapitalMoney { get; set; }//вклад
+        public int Credit { get; set; }//кредит
+        public int CreditPrecent { get; set; }//ставка кредита
+        public string Type { get; set; }//тип пользователя
+        /// <summary>
+        /// конструктор по созданию клиента
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="lastName"></param>
+        /// <param name="password"></param>
+        /// <param name="cardNumber"></param>
+        /// <param name="money"></param>
+        /// <param name="capitalMoney"></param>
+        /// <param name="credit"></param>
+        /// <param name="creditPrecent"></param>
+        /// <param name="type"></param>
+        public PeoplePost(string name, string lastName, string password, int cardNumber, int money, int capitalMoney, int credit, int creditPrecent, string type)
         {
             this.Name = name;
             this.LastName = lastName;
-            this.Password = password;
-            this.CardNumber = cardNumber;
+            this.Password = PasswordCreat();
+            this.CardNumber = NumberCreat();
+            this.Money = MoneyCreat();
+            this.CapitalMoney = capitalMoney;
+            this.Credit = credit;
+            this.CreditPrecent = creditPrecent;
+            this.Type = type;
+
         }
         public PeoplePost()
         {
 
         }
-
-        public void capitalizationYES()
+        /// <summary>
+        /// создание пароля
+        /// </summary>
+        /// <returns></returns>
+        public string PasswordCreat()
         {
-            throw new NotImplementedException();
+            string password = "";
+            for (int i = 0; i <random.Next(5, 8); i++)
+            {
+                int Qun = random.Next(1, 9);
+                password = password + Convert.ToString(Qun);
+            }
+            return password;
         }
-
-        public void capitalizationNO()
+        /// <summary>
+        /// создания коллекции с пользователсями
+        /// </summary>
+        /// <returns></returns>
+       static public List<PeoplePost> BDCreat()
         {
-            throw new NotImplementedException();
+           List<PeoplePost> peoplePost = new List<PeoplePost>();
+            Random random = new Random();
+            int vsego = 20;
+            int legal = random.Next(10, 12);
+            int Regular = random.Next(5, 7);
+            int Vip = vsego - legal - Regular;
+            int ID = 0;
+            for (int q = 0; q < legal; q++)
+            {
+                peoplePost.Add(new legalPeople($"Name_{ID}", $"last_name{ID}", "", 0, 0, 0, 0, 0, "legal"));
+                ID++;
+            }
+            for (int w = 0; w < Regular; w++)
+            {
+                peoplePost.Add(new RegularPeople($"Name_{ID}", $"last_name{ID}", "", 0, 0, 0, 0, 0, "regular"));
+                ID++;
+            }
+            for (int e = 0; e < Vip; e++)
+            {
+                peoplePost.Add(new VIPpeople($"Name_{ID}", $"last_name{ID}", "", 0, 0, 0, 0, 0, "VIP"));
+                ID++;
+            }
+            return peoplePost;
+        }
+        /// <summary>
+        /// создание счета
+        /// </summary>
+        /// <returns></returns>
+        public int NumberCreat()
+        {
+            int CardNumber = random.Next(100000000, 999999999);
+            return CardNumber;
+        }
+        /// <summary>
+        /// создание денег
+        /// </summary>
+        /// <returns></returns>
+        public int MoneyCreat()
+        {
+            int money = random.Next(60000, 140000);
+            return money;
         }
     }
 }

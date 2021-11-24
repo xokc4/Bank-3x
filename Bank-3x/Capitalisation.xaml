@@ -1,0 +1,26 @@
+﻿<Window x:Class="Bank_3x.Capitalisation"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Bank_3x"
+        mc:Ignorable="d"
+        Title="Capitalisation" Height="281.595" Width="388.65">
+
+    <Grid>
+
+        <TextBox HorizontalAlignment="Left" x:Name="MoneyCapit" Height="26" Margin="10,123,0,0" TextWrapping="Wrap" Text=" " VerticalAlignment="Top" Width="187" RenderTransformOrigin="0.039,0.599"/>
+        <Label Content="внести деньги для вклада:" HorizontalAlignment="Left" Height="27" Margin="10,91,0,0" VerticalAlignment="Top" Width="167"/>
+        <Label Content="Сколько получите через год:" HorizontalAlignment="Left" Height="28" Margin="10,154,0,0" VerticalAlignment="Top" Width="187" RenderTransformOrigin="0.184,0.358"/>
+        <Label Content="" x:Name="MoneyEarsCapit" HorizontalAlignment="Left" Height="34" Margin="10,182,0,0" VerticalAlignment="Top" Width="187"/>
+        <Button Content="Внести" Click="ButtonCapit_Click" x:Name="ButtonCapit" HorizontalAlignment="Left" Margin="226,120,0,0" VerticalAlignment="Top" Width="145" RenderTransformOrigin="0.746,2.434" Height="36"/>
+        <Label Content="" Foreground="Red" x:Name="MessageBox" HorizontalAlignment="Left" Height="90" Margin="226,161,0,0" VerticalAlignment="Top" Width="145"/>
+        <Label Content="" x:Name="InfMoneyYears" HorizontalAlignment="Left" Height="25" Margin="10,216,0,0" VerticalAlignment="Top" Width="187"/>
+        <Label Content="выбрать капитализацию:" HorizontalAlignment="Left" Height="27" Margin="10,10,0,0" VerticalAlignment="Top" Width="187"/>
+        <ComboBox HorizontalAlignment="Left"  x:Name="Combobox" Height="19" Margin="10,42,0,0" VerticalAlignment="Top" Width="187" >
+            <TextBlock x:Name="CapitalisationYES">вклад с капитализацией</TextBlock>
+            <TextBlock x:Name="CapitalisationNO">вклад без капитализации</TextBlock>
+        </ComboBox>
+
+    </Grid>
+</Window>

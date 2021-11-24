@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Bank_3x.FolderPeople
 {
-    interface Icapitalization
+    interface Icapitalization// интерфейс для вклада
     {
        void capitalizationYES();
        void capitalizationNO();

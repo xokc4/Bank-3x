@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Bank_3x.FolderPeople
 {
-   public class VIPpeople : PeoplePost
+    public class VIPpeople : PeoplePost
     {
-        public VIPpeople(string name, string lastName, string password, int cardNumber) : base(name, lastName, password, cardNumber)
+        public VIPpeople(string name, string lastName, string password, int cardNumber, int money, int capitalMoney, int credit, int creditPrecent, string type) : base(name, lastName, password, cardNumber, money, capitalMoney, credit, creditPrecent, type)
         {
         }
     }

@@ -10,17 +10,18 @@
         <ListView x:Name="People" HorizontalAlignment="Left" Height="295" Margin="43,62,0,0" VerticalAlignment="Top" Width="401">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}"/>
-                    <GridViewColumn Header="Quantity" DisplayMemberBinding="{Binding Password}"/>
-                    <GridViewColumn Header="DepartId" DisplayMemberBinding="{Binding CardNumber}"/>
+                    <GridViewColumn Header="Имя" DisplayMemberBinding="{Binding Name}"/>
+                    <GridViewColumn Header="пароль" DisplayMemberBinding="{Binding Password}"/>
+                    <GridViewColumn Header="номер карты" DisplayMemberBinding="{Binding CardNumber}"/>
+                    <GridViewColumn Header="тип аккаунта" DisplayMemberBinding="{Binding Type}"/>
                 </GridView>
             </ListView.View>
         </ListView>
 
         <TextBox HorizontalAlignment="Left" x:Name="log" Height="23" Margin="523,236,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="172"/>
         <Button Content="войти" x:Name="HefNow" Click="HefNow_Click"  HorizontalAlignment="Left" Margin="558,337,0,0" VerticalAlignment="Top" Width="97"/>
-        <Label Content="логин:" HorizontalAlignment="Left" Margin="461,233,0,0" VerticalAlignment="Top" Width="129"/>
-        <Label Content="пароль:" HorizontalAlignment="Left" Margin="461,281,0,0" VerticalAlignment="Top" Width="129"/>
+        <Label Content="логин:" HorizontalAlignment="Left" Margin="461,233,0,0" VerticalAlignment="Top" Width="57"/>
+        <Label Content="пароль:" HorizontalAlignment="Left" Margin="461,281,0,0" VerticalAlignment="Top" Width="57"/>
         <PasswordBox HorizontalAlignment="Left" x:Name="pass" Margin="523,289,0,0" VerticalAlignment="Top" Width="172" RenderTransformOrigin="0.017,0.313"/>
 
     </Grid>

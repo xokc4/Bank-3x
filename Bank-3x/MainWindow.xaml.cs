@@ -20,62 +20,63 @@ namespace Bank_3x
     /// Логика взаимодействия для MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
-    {
-        public static List<legalPeople> leagalPeoples;
+    {/// <summary>
+    /// статичный логин == имя аккаунта пользователя
+    /// </summary>
+        public static string logName;
+        /// <summary>
+        /// запуск приложения и создание бд(пользователей)
+        /// </summary>
         public MainWindow()
         {
             InitializeComponent();
-            leagalPeoples = new List<legalPeople>();
-            CreateBD();
-            People.ItemsSource = leagalPeoples;
-        }
 
+            Account.CreateBD();// создание пользователей
+            People.ItemsSource = Account.peoplePost;//передача информации пользователей
+        }
+        /// <summary>
+        /// при нажатии на кнопку происходит проверка введённых данных 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void HefNow_Click(object sender, RoutedEventArgs e)
         {
             СheckAccount();
         }
 
-        public void CreateBD()//
-        {
-            Random random = new Random();
-            for(int q = 0; q<random.Next(20, 25); q++)
-            {
-                leagalPeoples.Add(new legalPeople($"Name_{q}", $"last_name{q}", GeneratorPassword(), GeneratorCardNumber()));
-            }
-        }
-
-        public string  GeneratorPassword()// перекинуть в PeoplePost
-        {
-            string password = "";
-            Random random = new Random();
-            for(int i=0; i<5; i++)
-            {
-               int Qun =  random.Next(1, 9);
-                password = password + Convert.ToString(Qun);
-            }
-            return password;
-        }
-        public int GeneratorCardNumber()// перекинуть в PeoplePost
-        {
-            Random random = new Random();
-            int CardNumber = random.Next(100000000, 999999999);
-            return CardNumber;
-        }
+     /// <summary>
+     /// проверка данных
+     /// </summary>
         public void СheckAccount()
         {
-            string login = Convert.ToString(log.Text);
-            
-            foreach(var acc in leagalPeoples)
+            string login = Convert.ToString(log.Text);//ввод логина
+            bool eas = true;//уловие 
+            foreach(var acc in Account.peoplePost)//чтение коллекции с пользователями
             {
-                if(login == acc.Name)
+                if(login == acc.Name)// проверка на имя аккаунта
                 {
-                    if(pass.Password == acc.Password)
+                    if(pass.Password == acc.Password)//проверка пароля 
                     {
-                        NewWindow();
-                    }    
+                        logName = login;//передача имени в статическую переменную 
+                        eas = false;
+                        NewWindow();// окрытие другого метода 
+                    }  
+                    else
+                    {
+                        pass.Clear();// удаление введенного пароля
+                        MessageBox.Show("не правильный пароль");//вывод сообщения
+                    }
                 }
+                 if(eas == true)
+                 { 
+                    
+                    MessageBox.Show("нет такого пользователя");//вывод сообщения
+                 }
             }
         }
+        /// <summary>
+        /// открытие нового окна 
+        /// </summary>
         public void NewWindow()
         {
             Account account = new Account();

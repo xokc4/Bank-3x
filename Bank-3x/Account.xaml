@@ -5,8 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Bank_3x"
         mc:Ignorable="d"
-        Title="Account" Height="450" Width="800">
+        Title="Account" Height="450" Width="628">
     <Grid>
+
         <Label Content="" x:Name="Money" FontSize="20" HorizontalAlignment="Left" Height="49" Margin="34,58,0,0" VerticalAlignment="Top" Width="290"/>
         <Label Content="Сумма денег на счету:" HorizontalAlignment="Left" Height="29" Margin="34,24,0,0" VerticalAlignment="Top" Width="290"/>
         <Label Content="" x:Name="CardNumberLabel" HorizontalAlignment="Left" Height="31" Margin="34,112,0,0" VerticalAlignment="Top" Width="290"/>
@@ -14,7 +15,9 @@
         <Button Content="капитализация" x:Name="Capitalization" Click="Capitalization_Click" HorizontalAlignment="Left" Height="25" Margin="34,286,0,0" VerticalAlignment="Top" Width="109"/>
         <Button Content="взять кредит" x:Name="Сredit" Click="Сredit_Click" HorizontalAlignment="Left" Margin="454,286,0,0" VerticalAlignment="Top" Width="112" Height="25"/>
         <Label Content="" x:Name="CapitalizationNumber" HorizontalAlignment="Left" Height="28" Margin="34,329,0,0" VerticalAlignment="Top" Width="201"/>
-        <Label Content="" x:Name="СreditNumber" HorizontalAlignment="Left" Height="28" Margin="454,329,0,0" VerticalAlignment="Top" Width="148"/>
+        <Label Content="" x:Name="СreditNumber" HorizontalAlignment="Left" Height="28" Margin="418,329,0,0" VerticalAlignment="Top" Width="148"/>
+        <Label x:Name="CreditPresent" HorizontalAlignment="Left" Height="26" Margin="310,362,0,0" VerticalAlignment="Top" Width="256"/>
+
 
     </Grid>
 </Window>
