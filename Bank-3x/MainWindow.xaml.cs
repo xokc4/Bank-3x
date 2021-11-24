@@ -21,9 +21,9 @@ namespace Bank_3x
     /// </summary>
     public partial class MainWindow : Window
     {/// <summary>
-    /// статичный логин == имя аккаунта пользователя
+    /// статичный id 
     /// </summary>
-        public static string logName;
+       static public int Id;
         /// <summary>
         /// запуск приложения и создание бд(пользователей)
         /// </summary>
@@ -57,7 +57,7 @@ namespace Bank_3x
                 {
                     if(pass.Password == acc.Password)//проверка пароля 
                     {
-                        logName = login;//передача имени в статическую переменную 
+                        Id= acc.ID;//передача имени в статическую переменную 
                         eas = false;
                         NewWindow();// окрытие другого метода 
                     }  

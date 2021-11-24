@@ -33,7 +33,7 @@ namespace Bank_3x
         {
             foreach (var item in Account.peoplePost)
             {
-                if (MainWindow.logName == item.Name)
+                if (MainWindow.Id == item.ID)
                 {
 
                     if (item.Credit == 0)// условие для принятия кредита

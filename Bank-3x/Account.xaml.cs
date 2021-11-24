@@ -62,7 +62,7 @@ namespace Bank_3x
         {
             foreach (var item in peoplePost)
             {
-                if (MainWindow.logName == item.Name)// выбор аккаунта по имени
+                if (MainWindow.Id == item.ID)// выбор аккаунта по имени
                 {
                     if (item.CapitalMoney > 0)//условие если на счету есть деньги
                     {
@@ -90,7 +90,7 @@ namespace Bank_3x
         {
             foreach (var item in peoplePost)
             {
-                if (MainWindow.logName == item.Name)
+                if (MainWindow.Id == item.ID)
                 {
                     if (item.CreditPrecent > 0)
                     {
@@ -166,7 +166,7 @@ namespace Bank_3x
             
             foreach (var item in peoplePost)
             {
-                if (MainWindow.logName == item.Name)
+                if (MainWindow.Id == item.ID)
                 {
 
                     Money.Content = item.Money + "  р.";

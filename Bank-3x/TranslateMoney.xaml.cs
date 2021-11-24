@@ -34,7 +34,7 @@ namespace Bank_3x
             bool eua = true;//условие дял проверки
             foreach (var item2 in Account.peoplePost)//чтение коллекции
             {
-                if (MainWindow.logName == item2.Name)//условие по анахождении пользователя
+                if (MainWindow.Id == item2.ID)//условие по анахождении пользователя
                 {
                     int summa = 0;//процентная ставка для перевода 
                     if(item2.Type == "legal")// условие для процента
