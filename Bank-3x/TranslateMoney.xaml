@@ -14,6 +14,7 @@
         <Button Content="перевести" x:Name="TranslateButton" Click="TranslateButton_Click" HorizontalAlignment="Left" Margin="10,287,0,0" VerticalAlignment="Top" Width="103"/>
         <Button Content="закрыть" x:Name="CloseButton" Click="CloseButton_Click" HorizontalAlignment="Left" Height="20" Margin="141,287,0,0" VerticalAlignment="Top" Width="103"/>
         <Label Content="" Foreground="Red"  x:Name="labelMessege" HorizontalAlignment="Left" Margin="22,218,0,0" VerticalAlignment="Top" Width="209"/>
+        <Label Content="" x:Name="percentBank" HorizontalAlignment="Left" Height="31" Margin="10,182,0,0" VerticalAlignment="Top" Width="234"/>
 
     </Grid>
 </Window>

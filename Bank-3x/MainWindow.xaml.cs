@@ -63,13 +63,16 @@ namespace Bank_3x
                     }  
                     else
                     {
+                        log.Clear();
                         pass.Clear();// удаление введенного пароля
                         MessageBox.Show("не правильный пароль");//вывод сообщения
                     }
                 }
                  if(eas == true)
-                 { 
-                    
+                 {
+                    log.Clear();
+                    pass.Clear();
+                    eas = false;
                     MessageBox.Show("нет такого пользователя");//вывод сообщения
                  }
             }

@@ -17,7 +17,7 @@
         <Label Content="" Foreground="Red" x:Name="MessageBox" HorizontalAlignment="Left" Height="90" Margin="226,161,0,0" VerticalAlignment="Top" Width="145"/>
         <Label Content="" x:Name="InfMoneyYears" HorizontalAlignment="Left" Height="25" Margin="10,216,0,0" VerticalAlignment="Top" Width="187"/>
         <Label Content="выбрать капитализацию:" HorizontalAlignment="Left" Height="27" Margin="10,10,0,0" VerticalAlignment="Top" Width="187"/>
-        <ComboBox HorizontalAlignment="Left"  x:Name="Combobox" Height="19" Margin="10,42,0,0" VerticalAlignment="Top" Width="187" >
+        <ComboBox HorizontalAlignment="Left"  x:Name="Combobox" Height="30" Margin="10,42,0,0" VerticalAlignment="Top" Width="187" >
             <TextBlock x:Name="CapitalisationYES">вклад с капитализацией</TextBlock>
             <TextBlock x:Name="CapitalisationNO">вклад без капитализации</TextBlock>
         </ComboBox>

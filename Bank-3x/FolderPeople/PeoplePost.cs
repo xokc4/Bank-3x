@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Bank_3x.FolderPeople
 {
-   public class PeoplePost : ICreatInfPeople
+ 
+   public class PeoplePost 
     {
         Random random = new Random();//рандомайз
         public string Name { get; set; }//имя
@@ -35,9 +36,9 @@ namespace Bank_3x.FolderPeople
         {
             this.Name = name;
             this.LastName = lastName;
-            this.Password = PasswordCreat();
-            this.CardNumber = NumberCreat();
-            this.Money = MoneyCreat();
+            this.Password = password;
+            this.CardNumber = cardNumber;
+            this.Money = money;
             this.CapitalMoney = capitalMoney;
             this.Credit = credit;
             this.CreditPrecent = creditPrecent;
@@ -49,20 +50,9 @@ namespace Bank_3x.FolderPeople
         {
 
         }
-        /// <summary>
-        /// создание пароля
-        /// </summary>
-        /// <returns></returns>
-        public string PasswordCreat()
-        {
-            string password = "";
-            for (int i = 0; i <random.Next(5, 8); i++)
-            {
-                int Qun = random.Next(1, 9);
-                password = password + Convert.ToString(Qun);
-            }
-            return password;
-        }
+       
+       
+      
         /// <summary>
         /// создания коллекции с пользователсями
         /// </summary>
@@ -78,38 +68,30 @@ namespace Bank_3x.FolderPeople
             int ID = 1;
             for (int q = 0; q < legal; q++)
             {
-                peoplePost.Add(new legalPeople($"Name_{ID}", $"last_name{ID}", "", 0, 0, 0, 0, 0, "legal", ID));
+                string password = Convert.ToString(random.Next(10000, 99999));
+                int CardNumber = random.Next(100000000, 999999999);
+                int money = random.Next(60000, 140000);
+                peoplePost.Add(new legalPeople($"Name_{ID}", $"last_name{ID}", password, CardNumber, money, 0, 0, 0, "legal", ID));
                 ID++;
             }
             for (int w = 0; w < Regular; w++)
             {
-                peoplePost.Add(new RegularPeople($"Name_{ID}", $"last_name{ID}", "", 0, 0, 0, 0, 0, "regular", ID));
+                string password = Convert.ToString(random.Next(10000, 99999));
+                int CardNumber = random.Next(100000000, 999999999);
+                int money = random.Next(60000, 140000);
+                peoplePost.Add(new RegularPeople($"Name_{ID}", $"last_name{ID}", password, CardNumber, money, 0, 0, 0, "regular", ID));
                 ID++;
             }
             for (int e = 0; e < Vip; e++)
             {
-                peoplePost.Add(new VIPpeople($"Name_{ID}", $"last_name{ID}", "", 0, 0, 0, 0, 0, "VIP", ID));
+                string password = Convert.ToString(random.Next(10000, 99999));
+                int CardNumber = random.Next(100000000, 999999999);
+                int money = random.Next(60000, 140000);
+                peoplePost.Add(new VIPpeople($"Name_{ID}", $"last_name{ID}", password, CardNumber, money, 0, 0, 0, "VIP", ID));
                 ID++;
             }
             return peoplePost;
         }
-        /// <summary>
-        /// создание счета
-        /// </summary>
-        /// <returns></returns>
-        public int NumberCreat()
-        {
-            int CardNumber = random.Next(100000000, 999999999);
-            return CardNumber;
-        }
-        /// <summary>
-        /// создание денег
-        /// </summary>
-        /// <returns></returns>
-        public int MoneyCreat()
-        {
-            int money = random.Next(60000, 140000);
-            return money;
-        }
-    }
+
+   }
 }

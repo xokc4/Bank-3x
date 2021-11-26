@@ -73,7 +73,6 @@
     <Compile Include="Credit.xaml.cs">
       <DependentUpon>Credit.xaml</DependentUpon>
     </Compile>
-    <Compile Include="FolderPeople\ICreatInfPeople.cs" />
     <Compile Include="TranslateMoney.xaml.cs">
       <DependentUpon>TranslateMoney.xaml</DependentUpon>
     </Compile>

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -51,28 +52,35 @@ namespace Bank_3x
           foreach (var item in Account.peoplePost)
           {
             if(MainWindow.Id == item.ID)
-            {
-                    if(Convert.ToInt32(MoneyCapit.Text)<=item.Money)// условие для вклада 
+                {
+                    if (Regex.IsMatch(MoneyCapit.Text, "[0-9]"))
                     {
-                        if(Convert.ToInt32(MoneyCapit.Text) > 1000 || Convert.ToInt32(MoneyCapit.Text) == 1000)// условие для размера вклада
+                        if (Convert.ToInt32(MoneyCapit.Text) <= item.Money)// условие для вклада 
                         {
-                            item.Money = item.Money - Convert.ToInt32(MoneyCapit.Text);// снятие денег с счета
-                            
-                            MoneyEarsCapit.Content = (Convert.ToDouble(MoneyCapit.Text) * 0.12) + Convert.ToDouble(MoneyCapit.Text);
-                            item.CapitalMoney = (Convert.ToDouble(MoneyCapit.Text) * 0.12) + Convert.ToDouble(MoneyCapit.Text);//формула для вклада
-                            InfMoneyYears.Content = "будет через 12 месяцев";//
+                            if (Convert.ToInt32(MoneyCapit.Text) > 1000 || Convert.ToInt32(MoneyCapit.Text) == 1000)// условие для размера вклада
+                            {
+                                item.Money = item.Money - Convert.ToInt32(MoneyCapit.Text);// снятие денег с счета
+
+                                MoneyEarsCapit.Content = (Convert.ToDouble(MoneyCapit.Text) * 0.12) + Convert.ToDouble(MoneyCapit.Text);
+                                item.CapitalMoney = (Convert.ToDouble(MoneyCapit.Text) * 0.12) + Convert.ToDouble(MoneyCapit.Text);//формула для вклада
+                                InfMoneyYears.Content = "будет через 12 месяцев";//
+                            }
+                            else
+                            {
+                                MessageBox.Content = "Вклады только с 1000 р";
+                            }
                         }
                         else
                         {
-                            MessageBox.Content = "Вклады только с 1000 р";
+                            MessageBox.Content = "не хватает денег";
                         }
                     }
                     else
                     {
-                        MessageBox.Content = "не хватает денег";
+                        MoneyCapit.Clear();
+                        MessageBox.Content = "нужно вписывать числа";
                     }
-            }
-            
+            }  
           }
         }
         /// <summary>
