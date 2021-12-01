@@ -67,16 +67,24 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="CangneContact.xaml.cs">
+      <DependentUpon>CangneContact.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Capitalisation.xaml.cs">
       <DependentUpon>Capitalisation.xaml</DependentUpon>
     </Compile>
     <Compile Include="Credit.xaml.cs">
       <DependentUpon>Credit.xaml</DependentUpon>
     </Compile>
+    <Compile Include="FolderPeople\Histori.cs" />
     <Compile Include="TranslateMoney.xaml.cs">
       <DependentUpon>TranslateMoney.xaml</DependentUpon>
     </Compile>
     <Page Include="Account.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CangneContact.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

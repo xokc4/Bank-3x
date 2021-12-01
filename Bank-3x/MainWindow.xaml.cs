@@ -1,18 +1,8 @@
 ﻿using Bank_3x.FolderPeople;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace Bank_3x
 {
@@ -20,20 +10,37 @@ namespace Bank_3x
     /// Логика взаимодействия для MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
-    {/// <summary>
-    /// статичный id 
-    /// </summary>
-       static public int Id;
+    {
+        DispatcherTimer TimeRefresh = new DispatcherTimer();// время рефреш
+        static public List<Histori> historis = new List<Histori>();// коллекция истории переведов и тд
+         public static Account account = new Account();
+        /// <summary>
+        /// статичный id 
+        /// </summary>
+        static public int Id;
         /// <summary>
         /// запуск приложения и создание бд(пользователей)
         /// </summary>
         public MainWindow()
         {
             InitializeComponent();
-
             Account.CreateBD();// создание пользователей
             People.ItemsSource = Account.peoplePost;//передача информации пользователей
+            Refresh();
         }
+        public void Refresh()
+        {
+            TimeRefresh.Interval = new TimeSpan(0, 0, 5); // в часах, минутах, секундах. обновление всего происходит каждые 5 секунд
+            TimeRefresh.Tick += dtClockTime_Tick;//при обновлении времени включается метод по названии
+            TimeRefresh.Start();//запуск работы времени
+        }
+
+        private void dtClockTime_Tick(object sender, EventArgs e)//обновление таблицы
+        {
+            People.ItemsSource = null;
+            People.ItemsSource = Account.peoplePost;
+        }
+
         /// <summary>
         /// при нажатии на кнопку происходит проверка введённых данных 
         /// </summary>
@@ -50,7 +57,7 @@ namespace Bank_3x
         public void СheckAccount()
         {
             string login = Convert.ToString(log.Text);//ввод логина
-            bool eas = true;//уловие 
+            bool eas = false;//уcловие 
             foreach(var acc in Account.peoplePost)//чтение коллекции с пользователями
             {
                 if(login == acc.Name)// проверка на имя аккаунта
@@ -58,7 +65,7 @@ namespace Bank_3x
                     if(pass.Password == acc.Password)//проверка пароля 
                     {
                         Id= acc.ID;//передача имени в статическую переменную 
-                        eas = false;
+                        
                         NewWindow();// окрытие другого метода 
                     }  
                     else
@@ -82,7 +89,6 @@ namespace Bank_3x
         /// </summary>
         public void NewWindow()
         {
-            Account account = new Account();
             account.Show();
         }
     }

@@ -21,12 +21,17 @@ namespace Bank_3x
     /// </summary>
     public partial class Capitalisation : Window, Icapitalization
     {
+        /// <summary>
+        /// делегат по добавлении истории
+        /// </summary>
+        /// <param name="money"></param>
+        public delegate void MSG(int money);
        
         public Capitalisation()
         {
             InitializeComponent();
-            
 
+         
 
         }
         /// <summary>
@@ -52,33 +57,45 @@ namespace Bank_3x
           foreach (var item in Account.peoplePost)
           {
             if(MainWindow.Id == item.ID)
-                {
-                    if (Regex.IsMatch(MoneyCapit.Text, "[0-9]"))
+            {
+                    if (item.OpenCard == false)
                     {
-                        if (Convert.ToInt32(MoneyCapit.Text) <= item.Money)// условие для вклада 
+                        MessageBox.Show("Ваш аккаунт заблокирован, из-за большого количества переводов денег на другой счет");
+                    }
+                    else
+                    {
+                        if (Regex.IsMatch(MoneyCapit.Text, "[0-9]"))
                         {
-                            if (Convert.ToInt32(MoneyCapit.Text) > 1000 || Convert.ToInt32(MoneyCapit.Text) == 1000)// условие для размера вклада
+                            if (Convert.ToInt32(MoneyCapit.Text) <= item.Money)// условие для вклада 
                             {
-                                item.Money = item.Money - Convert.ToInt32(MoneyCapit.Text);// снятие денег с счета
-
-                                MoneyEarsCapit.Content = (Convert.ToDouble(MoneyCapit.Text) * 0.12) + Convert.ToDouble(MoneyCapit.Text);
-                                item.CapitalMoney = (Convert.ToDouble(MoneyCapit.Text) * 0.12) + Convert.ToDouble(MoneyCapit.Text);//формула для вклада
-                                InfMoneyYears.Content = "будет через 12 месяцев";//
+                                if (Convert.ToInt32(MoneyCapit.Text) > 1000 || Convert.ToInt32(MoneyCapit.Text) == 1000)// условие для размера вклада
+                                {
+                                    item.Money = item.Money - Convert.ToInt32(MoneyCapit.Text);// снятие денег с счета
+                                    int MoneyHistori = Convert.ToInt32(MoneyCapit.Text);
+                                    MoneyEarsCapit.Content = (Convert.ToDouble(MoneyCapit.Text) * 0.12) + Convert.ToDouble(MoneyCapit.Text);
+                                    item.CapitalMoney = (Convert.ToDouble(MoneyCapit.Text) * 0.12) + Convert.ToDouble(MoneyCapit.Text);//формула для вклада
+                                    InfMoneyYears.Content = "будет через 12 месяцев";//
+                                    MSG MSGHis = ((int Money) =>//метод по добавлении истории 
+                                    {
+                                        MainWindow.historis.Add(new Histori("CapitNo", Money, MainWindow.Id));
+                                    });
+                                    MSGHis(MoneyHistori);
+                                }
+                                else
+                                {
+                                    MessageBoxWPF.Content = "Вклады только с 1000 р";
+                                }
                             }
                             else
                             {
-                                MessageBox.Content = "Вклады только с 1000 р";
+                                MessageBoxWPF.Content = "не хватает денег";
                             }
                         }
                         else
                         {
-                            MessageBox.Content = "не хватает денег";
+                            MoneyCapit.Clear();
+                            MessageBoxWPF.Content = "нужно вписывать числа";
                         }
-                    }
-                    else
-                    {
-                        MoneyCapit.Clear();
-                        MessageBox.Content = "нужно вписывать числа";
                     }
             }  
           }
@@ -92,33 +109,47 @@ namespace Bank_3x
             {
                 if (MainWindow.Id == item.ID)
                 {
-                    if (Convert.ToInt32(MoneyCapit.Text) <= item.Money)
+                    if (item.OpenCard == false)
                     {
-                        if (Convert.ToInt32(MoneyCapit.Text) > 1000 || Convert.ToInt32(MoneyCapit.Text) == 1000)
-                        {
-                            item.Money = item.Money - Convert.ToInt32(MoneyCapit.Text);
-                            double MoneyBeginning = Convert.ToDouble(MoneyCapit.Text);
-                          
-                          
-                            for (int i = 0; i<12; i++)// цикл для формулы
-                            {
-                                double persentMonth = MoneyBeginning * 12 / 100;
-                                double persentMiniMoth = persentMonth * 12 / 100;
-                                MoneyBeginning = persentMiniMoth + MoneyBeginning;// формула
-                                
-                            }
-                            item.CapitalMoney = Convert.ToInt32(MoneyBeginning);
-                            MoneyEarsCapit.Content = Convert.ToInt32(MoneyBeginning);
-                            InfMoneyYears.Content = "будет через 12 месяцев";
-                        }
-                        else
-                        {
-                            MessageBox.Content = "Вклады только с 1000р";
-                        }
+                        MessageBox.Show("Ваш аккаунт заблокирован, из-за большого количества переводов денег на другой счет");
                     }
                     else
                     {
-                        MessageBox.Content = "не хватает денег";
+
+                        if (Convert.ToInt32(MoneyCapit.Text) <= item.Money)
+                        {
+                            if (Convert.ToInt32(MoneyCapit.Text) > 1000 || Convert.ToInt32(MoneyCapit.Text) == 1000)
+                            {
+                                int MoneyHistor = Convert.ToInt32(MoneyCapit.Text);
+                                item.Money = item.Money - Convert.ToInt32(MoneyCapit.Text);
+                                double MoneyBeginning = Convert.ToDouble(MoneyCapit.Text);
+
+
+                                for (int i = 0; i < 12; i++)// цикл для формулы
+                                {
+                                    double persentMonth = MoneyBeginning * 12 / 100;
+                                    double persentMiniMoth = persentMonth * 12 / 100;
+                                    MoneyBeginning = persentMiniMoth + MoneyBeginning;// формула
+
+                                }
+                                item.CapitalMoney = Convert.ToInt32(MoneyBeginning);
+                                MoneyEarsCapit.Content = Convert.ToInt32(MoneyBeginning);
+                                InfMoneyYears.Content = "будет через 12 месяцев";
+                                MSG MSGHis = ((int Money) =>//метод по добавлении истории 
+                                {
+                                    MainWindow.historis.Add(new Histori("CapitYes", Money, MainWindow.Id));
+                                });
+                                MSGHis(MoneyHistor);
+                            }
+                            else
+                            {
+                                MessageBoxWPF.Content = "Вклады только с 1000р";
+                            }
+                        }
+                        else
+                        {
+                            MessageBoxWPF.Content = "не хватает денег";
+                        }
                     }
                 }
 

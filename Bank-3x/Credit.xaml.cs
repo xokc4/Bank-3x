@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Bank_3x.FolderPeople;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,7 +21,11 @@ namespace Bank_3x
     /// </summary>
     public partial class Credit : Window
     {
-        
+        /// <summary>
+        /// делегат по добавлении истории
+        /// </summary>
+        /// <param name="money"></param>
+        delegate void MSG(int money);
         public Credit()
         {
             InitializeComponent();
@@ -36,56 +41,68 @@ namespace Bank_3x
             {
                 if (MainWindow.Id == item.ID)
                 {
-
-                    if (item.Credit == 0)// условие для принятия кредита
+                    if (item.OpenCard == false)
                     {
-                        if (Regex.IsMatch(MoneyCredit.Text, "[0-9]") && Regex.IsMatch(MothEyars.Text, "[0-9]"))
+                        MessageBox.Show("Ваш аккаунт заблокирован, из-за большого количества переводов денег на другой счет");
+                    }
+                    else
+                    {
+                        if (item.Credit == 0)// условие для принятия кредита
                         {
-                            if (Convert.ToInt32(MoneyCredit.Text) > 100000 || Convert.ToInt32(MoneyCredit.Text) == 100000)// условие минимального кредита
+                            if (Regex.IsMatch(MoneyCredit.Text, "[0-9]") && Regex.IsMatch(MothEyars.Text, "[0-9]"))
                             {
-                                double MoneySumm = Convert.ToDouble(MoneyCredit.Text);
-                                double Yuers = Convert.ToDouble(MothEyars.Text);
-                                double bet = 2;
-                                if (item.Type == "legal")
+                                if (Convert.ToInt32(MoneyCredit.Text) > 100000 || Convert.ToInt32(MoneyCredit.Text) == 100000)// условие минимального кредита
                                 {
-                                    if (Yuers <= 3)
+                                    double MoneySumm = Convert.ToDouble(MoneyCredit.Text);
+                                    double Yuers = Convert.ToDouble(MothEyars.Text);
+                                    double bet = 2;
+                                    if (item.Type == "legal")
                                     {
-                                        bet = 4;
-                                    }
-                                    if (Yuers > 3 && Yuers < 8)
+                                        if (Yuers <= 3)
+                                        {
+                                            bet = 4;
+                                        }
+                                        if (Yuers > 3 && Yuers < 8)
+                                        {
+                                            bet = 6;
+                                        }
+                                        if (Yuers > 10)
+                                        {
+                                            bet = 8;
+                                        }
+                                    }//условие процентной ставки
+                                    PresentBet.Content = bet + "%";
+                                    double payment = (MoneySumm + MoneySumm * bet * Yuers / 100) / (Yuers * 12);//формула
+                                    double otvet = Math.Round(payment, 2);
+                                    item.CreditPrecent = Convert.ToInt32(otvet);
+                                    RepaymentMoth.Content = otvet;
+                                    item.Credit = Convert.ToInt32(MoneySumm);
+                                    item.CreditPrecent = Convert.ToInt32(otvet);
+                                    item.Money = item.Money + Convert.ToInt32(MoneySumm);
+                                    int MoneyCreditMSg = Convert.ToInt32(MoneySumm);
+                                    MSG mSG = ((int MoneyCr) => // метод по добавлении истории
                                     {
-                                        bet = 6;
-                                    }
-                                    if (Yuers > 10)
-                                    {
-                                        bet = 8;
-                                    }
-                                }//условие процентной ставки
-                                PresentBet.Content = bet + "%";
-                                double payment = (MoneySumm + MoneySumm * bet * Yuers / 100) / (Yuers * 12);//формула
-                                double otvet = Math.Round(payment, 2);
-                                item.CreditPrecent = Convert.ToInt32(otvet);
-                                RepaymentMoth.Content = otvet;
-                                item.Credit = Convert.ToInt32(MoneySumm);
-                                item.CreditPrecent = Convert.ToInt32(otvet);
-                                item.Money = item.Money + Convert.ToInt32(MoneySumm);
+                                        MainWindow.historis.Add(new FolderPeople.Histori("Credit", MoneyCr, MainWindow.Id));
+                                    });
+                                    mSG(MoneyCreditMSg);
+                                }
+                                else
+                                {
+                                    InfCredit.Content = "кредит можно взять только с 100000 р ";
+                                }
                             }
                             else
                             {
-                                InfCredit.Content = "кредит можно взять только с 100000 р ";
+                                MoneyCredit.Clear();
+                                MothEyars.Clear();
+                                MessageBox.Show("нужно вписать только числа");
                             }
                         }
                         else
                         {
-                            MoneyCredit.Clear();
-                            MothEyars.Clear();
-                            MessageBox.Show("нужно вписать только числа");
+                            InfCredit.Content = " у вас уже есть кредит";
                         }
-                    }
-                    else
-                    {
-                        InfCredit.Content = " у вас уже есть кредит";
-                    }
+                    }  
                 }
             }
         }

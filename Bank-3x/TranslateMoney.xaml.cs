@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Bank_3x.FolderPeople;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,6 +21,8 @@ namespace Bank_3x
     /// </summary>
     public partial class TranslateMoney : Window
     {
+        //делегат по добавлении истории
+        public delegate void HistoriMsg( int money);
         public TranslateMoney()
         {
             InitializeComponent();
@@ -35,51 +38,69 @@ namespace Bank_3x
             bool eua = true;//условие дял проверки
             foreach (var item2 in Account.peoplePost)//чтение коллекции
             {
-                if (MainWindow.Id == item2.ID)//условие по анахождении пользователя
+                if (MainWindow.Id == item2.ID)//условие по уменьшении денег из своего счета
                 {
-                    int summa = 0;//процентная ставка для перевода 
-                    if(item2.Type == "legal")// условие для процента
+                    if (item2.OpenCard ==false)
                     {
-                        summa = 10;//для обычного пользователя 
-                    }
-                    if(item2.Type == "regular")
-                    {
-                        summa = 5;//для юриста 
+                        MessageBox.Show("Ваш аккаунт заблокирован, из-за большого количества переводов денег на другой счет");
                     }
                     else
                     {
-                        summa = 3;//для VIP пользователя 
-                    }
-                    if (Regex.IsMatch(MoneyTranslate.Text, "[0-9]") && Regex.IsMatch(CardNumberTranslate.Text, "[0-9]"))
-                    {
-                        if (item2.Money < 0)
+                        int summa = 0;//процентная ставка для перевода 
+                        if (item2.Type == "legal")// условие для процента
                         {
-                            labelMessege.Content = "на счету слишком мало денег";//сообщение 
+                            summa = 10;//для обычного пользователя 
                         }
-                        if (item2.Money > 0)//условие при наличие денег
+                        if (item2.Type == "regular")
                         {
-                            item2.Money = item2.Money - (Convert.ToInt32(MoneyTranslate.Text) + (Convert.ToInt32(MoneyTranslate.Text) / 100 * summa));// расчет и снятие денег
-                            percentBank.Content = "комиссия  " + Convert.ToInt32(MoneyTranslate.Text) / 100 * summa;
-                            foreach (var item in Account.peoplePost)//чтение коллекции
+                            summa = 5;//для юриста 
+                        }
+                        else
+                        {
+                            summa = 3;//для VIP пользователя 
+                        }
+                        if (Regex.IsMatch(MoneyTranslate.Text, "[0-9]") && Regex.IsMatch(CardNumberTranslate.Text, "[0-9]"))
+                        {
+                            if (item2.Money < 0)
                             {
-                                if (Convert.ToInt32(CardNumberTranslate.Text) == item.CardNumber)//нахождение аккаунта
+                                labelMessege.Content = "на счету слишком мало денег";//сообщение 
+                            }
+                            if (item2.Money > 0)//условие при наличие денег
+                            {
+                                int Histori321 = (Convert.ToInt32(MoneyTranslate.Text) + (Convert.ToInt32(MoneyTranslate.Text) / 100 * summa));
+                                item2.Money = item2.Money - (Convert.ToInt32(MoneyTranslate.Text) + (Convert.ToInt32(MoneyTranslate.Text) / 100 * summa));// расчет и снятие денег
+                                percentBank.Content = "комиссия  " + Convert.ToInt32(MoneyTranslate.Text) / 100 * summa;
+                                foreach (var item in Account.peoplePost)//чтение коллекции
                                 {
-                                    item.Money = item.Money + Convert.ToInt32(MoneyTranslate.Text);//перевод денег
-                                    labelMessege.Content = "перевод был совершон";//сообщение
-                                    MoneyTranslate.Clear();
-                                }
-                                if (eua == false)
-                                {
-                                    MessageBox.Show("не правильный счет");//сообщение
+                                    if (Convert.ToInt32(CardNumberTranslate.Text) == item.CardNumber)//нахождение аккаунта
+                                    {
+                                        item.Money = item.Money + Convert.ToInt32(MoneyTranslate.Text);//перевод денег
+                                        labelMessege.Content = "перевод был совершон";//сообщение
+                                        HistoriMsg histori = ((int Money) =>//метод по добавлении истории в коллекцию
+                                        {
+                                            MainWindow.historis.Add(new FolderPeople.Histori("Translat", Money, MainWindow.Id));
+                                        });
+                                        histori(Histori321);
+                                        HistoriMsg historiPeopeleTranslate = ((int Money) =>//метод по добавлении истории в коллекцию другому пользователю
+                                        {
+                                            MainWindow.historis.Add(new FolderPeople.Histori("Translat", Money, item.ID));
+                                        });
+                                        historiPeopeleTranslate(Histori321);
+                                        MoneyTranslate.Clear();
+                                    }
+                                    if (eua == false)
+                                    {
+                                        MessageBox.Show("не правильный счет");//сообщение
+                                    }
                                 }
                             }
                         }
-                    }
-                    if(Regex.IsMatch(MoneyTranslate.Text, "[a-zA-Z]"))
-                    {
-                        MoneyTranslate.Clear();
-                        MessageBox.Show("нужно вписывать числа");
-                       
+                        if (Regex.IsMatch(MoneyTranslate.Text, "[a-zA-Z]"))
+                        {
+                            MoneyTranslate.Clear();
+                            MessageBox.Show("нужно вписывать числа");
+
+                        }
                     }
                 }
             }
@@ -94,6 +115,6 @@ namespace Bank_3x
         {
             Close();//закрытие аккаунта
         }
-     
+        
     }
 }

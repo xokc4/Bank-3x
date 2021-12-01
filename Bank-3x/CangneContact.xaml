@@ -1,0 +1,19 @@
+﻿<Window x:Class="Bank_3x.CangneContact"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Bank_3x"
+        mc:Ignorable="d"
+        Title="CangneContact" Height="450" Width="800">
+    <Grid>
+        <Label Content="Изменить имя"  HorizontalAlignment="Left" Height="28" Margin="26,24,0,0" VerticalAlignment="Top" Width="144"/>
+        <Label Content="Изменить пароль"  HorizontalAlignment="Left" Height="28" Margin="26,242,0,0" VerticalAlignment="Top" Width="144"/>
+        <Label Content="Изменить фамилию"  HorizontalAlignment="Left" Height="28" Margin="26,140,0,0" VerticalAlignment="Top" Width="144"/>
+        <Button Content="изменить" x:Name="Change" Click="Change_Click" HorizontalAlignment="Left" Height="31" Margin="39,358,0,0" VerticalAlignment="Top" Width="94"/>
+        <TextBox HorizontalAlignment="Left" Margin="26,79,0,0" TextWrapping="Wrap" Text="" x:Name="ChangeName" VerticalAlignment="Top" Width="144" Height="34"/>
+        <TextBox HorizontalAlignment="Left" Margin="26,183,0,0" TextWrapping="Wrap" Text="" x:Name="ChangeLastName" VerticalAlignment="Top" Width="144" Height="34"/>
+        <TextBox HorizontalAlignment="Left" Margin="26,289,0,0" TextWrapping="Wrap" Text="" x:Name="ChangePassword" VerticalAlignment="Top" Width="144" Height="34"/>
+
+    </Grid>
+</Window>
