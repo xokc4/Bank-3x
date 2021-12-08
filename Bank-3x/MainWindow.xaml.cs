@@ -1,13 +1,17 @@
-﻿using Bank_3x.FolderPeople;
+﻿
+using Bank_3x.FolderPeople;
 using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Threading;
 
+
+
 namespace Bank_3x
 {
     /// <summary>
     /// Логика взаимодействия для MainWindow.xaml
+
     /// </summary>
     public partial class MainWindow : Window
     {
@@ -60,28 +64,36 @@ namespace Bank_3x
             bool eas = false;//уcловие 
             foreach(var acc in Account.peoplePost)//чтение коллекции с пользователями
             {
-                if(login == acc.Name)// проверка на имя аккаунта
+                try
                 {
-                    if(pass.Password == acc.Password)//проверка пароля 
+                    if (login == acc.Name)// проверка на имя аккаунта
                     {
-                        Id= acc.ID;//передача имени в статическую переменную 
-                        
-                        NewWindow();// окрытие другого метода 
-                    }  
-                    else
+                        if (pass.Password == acc.Password)//проверка пароля 
+                        {
+                            Id = acc.ID;//передача имени в статическую переменную 
+
+                            NewWindow();// окрытие другого метода 
+                        }
+                        else
+                        {
+                            log.Clear();
+                            pass.Clear();// удаление введенного пароля
+                            MessageBox.Show("не правильный пароль");//вывод сообщения
+                        }
+                    }
+                    if (eas == true)
                     {
                         log.Clear();
-                        pass.Clear();// удаление введенного пароля
-                        MessageBox.Show("не правильный пароль");//вывод сообщения
+                        pass.Clear();
+                        eas = false;
+                        MessageBox.Show("нет такого пользователя");//вывод сообщения
                     }
                 }
-                 if(eas == true)
-                 {
-                    log.Clear();
+                catch(FormatException)
+                {
                     pass.Clear();
-                    eas = false;
-                    MessageBox.Show("нет такого пользователя");//вывод сообщения
-                 }
+                    MessageBox.Show("для пароля нужны только цифры");
+                }
             }
         }
         /// <summary>

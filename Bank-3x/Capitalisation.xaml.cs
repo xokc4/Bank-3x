@@ -13,6 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using CreatSumm;
 
 namespace Bank_3x
 {
@@ -64,16 +65,20 @@ namespace Bank_3x
                     }
                     else
                     {
-                        if (Regex.IsMatch(MoneyCapit.Text, "[0-9]"))
+                        try 
                         {
                             if (Convert.ToInt32(MoneyCapit.Text) <= item.Money)// условие для вклада 
                             {
                                 if (Convert.ToInt32(MoneyCapit.Text) > 1000 || Convert.ToInt32(MoneyCapit.Text) == 1000)// условие для размера вклада
                                 {
                                     item.Money = item.Money - Convert.ToInt32(MoneyCapit.Text);// снятие денег с счета
+
                                     int MoneyHistori = Convert.ToInt32(MoneyCapit.Text);
-                                    MoneyEarsCapit.Content = (Convert.ToDouble(MoneyCapit.Text) * 0.12) + Convert.ToDouble(MoneyCapit.Text);
-                                    item.CapitalMoney = (Convert.ToDouble(MoneyCapit.Text) * 0.12) + Convert.ToDouble(MoneyCapit.Text);//формула для вклада
+
+                                    MoneyEarsCapit.Content = Creat.CreatCapitNo(Convert.ToDouble(MoneyCapit.Text));
+
+                                    item.CapitalMoney = Creat.CreatCapitNo(Convert.ToDouble(MoneyCapit.Text));//формула для вклада
+
                                     InfMoneyYears.Content = "будет через 12 месяцев";//
                                     MSG MSGHis = ((int Money) =>//метод по добавлении истории 
                                     {
@@ -90,8 +95,10 @@ namespace Bank_3x
                             {
                                 MessageBoxWPF.Content = "не хватает денег";
                             }
+                        
+                            
                         }
-                        else
+                        catch(FormatException)
                         {
                             MoneyCapit.Clear();
                             MessageBoxWPF.Content = "нужно вписывать числа";
@@ -115,40 +122,43 @@ namespace Bank_3x
                     }
                     else
                     {
-
-                        if (Convert.ToInt32(MoneyCapit.Text) <= item.Money)
+                        try
                         {
-                            if (Convert.ToInt32(MoneyCapit.Text) > 1000 || Convert.ToInt32(MoneyCapit.Text) == 1000)
+
+
+                            if (Convert.ToInt32(MoneyCapit.Text) <= item.Money)
                             {
-                                int MoneyHistor = Convert.ToInt32(MoneyCapit.Text);
-                                item.Money = item.Money - Convert.ToInt32(MoneyCapit.Text);
-                                double MoneyBeginning = Convert.ToDouble(MoneyCapit.Text);
-
-
-                                for (int i = 0; i < 12; i++)// цикл для формулы
+                                if (Convert.ToInt32(MoneyCapit.Text) > 1000 || Convert.ToInt32(MoneyCapit.Text) == 1000)
                                 {
-                                    double persentMonth = MoneyBeginning * 12 / 100;
-                                    double persentMiniMoth = persentMonth * 12 / 100;
-                                    MoneyBeginning = persentMiniMoth + MoneyBeginning;// формула
+                                    int MoneyHistor = Convert.ToInt32(MoneyCapit.Text);
+                                    item.Money = item.Money - Convert.ToInt32(MoneyCapit.Text);
+                                    
+                                    item.CapitalMoney = Creat.CreatCapitYES(Convert.ToDouble(MoneyCapit.Text));
 
+                                    MoneyEarsCapit.Content = Creat.CreatCapitYES(Convert.ToDouble(MoneyCapit.Text));
+
+                                    InfMoneyYears.Content = "будет через 12 месяцев";
+                                    MSG MSGHis = ((int Money) =>//метод по добавлении истории 
+                                    {
+                                        MainWindow.historis.Add(new Histori("CapitYes", Money, MainWindow.Id));
+                                    });
+                                    MSGHis(MoneyHistor);
                                 }
-                                item.CapitalMoney = Convert.ToInt32(MoneyBeginning);
-                                MoneyEarsCapit.Content = Convert.ToInt32(MoneyBeginning);
-                                InfMoneyYears.Content = "будет через 12 месяцев";
-                                MSG MSGHis = ((int Money) =>//метод по добавлении истории 
+                                else
                                 {
-                                    MainWindow.historis.Add(new Histori("CapitYes", Money, MainWindow.Id));
-                                });
-                                MSGHis(MoneyHistor);
+                                    MessageBoxWPF.Content = "Вклады только с 1000р";
+                                }
                             }
+
                             else
                             {
-                                MessageBoxWPF.Content = "Вклады только с 1000р";
+                                MessageBoxWPF.Content = "не хватает денег";
                             }
                         }
-                        else
+                        catch (FormatException)
                         {
-                            MessageBoxWPF.Content = "не хватает денег";
+                            MoneyCapit.Clear();
+                            MessageBoxWPF.Content = "нужно вписывать числа";
                         }
                     }
                 }

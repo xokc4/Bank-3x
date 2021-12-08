@@ -54,11 +54,11 @@ namespace Bank_3x
                 {
                     item.Name = ChangeName.Text;// передача данных
                     item.LastName = ChangeLastName.Text;//передача данных
-                    if (Regex.IsMatch(ChangePassword.Text, "[0-9]"))
-                    {
+                    try { 
+                    
                         item.Password = ChangePassword.Text;//передача данных
                     }
-                    else { MessageBox.Show("пароль состаит только из чисел"); }
+                    catch(FormatException) { MessageBox.Show("пароль состаит только из чисел"); }
                 }
             }
         }

@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31829.152
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31912.275
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bank-3x", "Bank-3x\Bank-3x.csproj", "{F13AA5B3-7AC7-498B-B4C4-FF9563F0C283}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CreatSumm", "CreatBD\CreatSumm.csproj", "{348F80DD-7F1A-4375-BDEB-CD8E8D79107B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{F13AA5B3-7AC7-498B-B4C4-FF9563F0C283}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F13AA5B3-7AC7-498B-B4C4-FF9563F0C283}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F13AA5B3-7AC7-498B-B4C4-FF9563F0C283}.Release|Any CPU.Build.0 = Release|Any CPU
+		{348F80DD-7F1A-4375-BDEB-CD8E8D79107B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{348F80DD-7F1A-4375-BDEB-CD8E8D79107B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{348F80DD-7F1A-4375-BDEB-CD8E8D79107B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{348F80DD-7F1A-4375-BDEB-CD8E8D79107B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

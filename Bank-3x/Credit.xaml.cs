@@ -13,6 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using CreatSumm;
 
 namespace Bank_3x
 {
@@ -49,8 +50,10 @@ namespace Bank_3x
                     {
                         if (item.Credit == 0)// условие для принятия кредита
                         {
-                            if (Regex.IsMatch(MoneyCredit.Text, "[0-9]") && Regex.IsMatch(MothEyars.Text, "[0-9]"))
+                            try
                             {
+
+
                                 if (Convert.ToInt32(MoneyCredit.Text) > 100000 || Convert.ToInt32(MoneyCredit.Text) == 100000)// условие минимального кредита
                                 {
                                     double MoneySumm = Convert.ToDouble(MoneyCredit.Text);
@@ -72,17 +75,16 @@ namespace Bank_3x
                                         }
                                     }//условие процентной ставки
                                     PresentBet.Content = bet + "%";
-                                    double payment = (MoneySumm + MoneySumm * bet * Yuers / 100) / (Yuers * 12);//формула
-                                    double otvet = Math.Round(payment, 2);
-                                    item.CreditPrecent = Convert.ToInt32(otvet);
-                                    RepaymentMoth.Content = otvet;
+                                   
+                                    item.CreditPrecent = Creat.CreatCredit( MoneySumm, Yuers, bet);
+                                    RepaymentMoth.Content = Creat.CreatCredit(MoneySumm, Yuers, bet);
                                     item.Credit = Convert.ToInt32(MoneySumm);
-                                    item.CreditPrecent = Convert.ToInt32(otvet);
+                                    item.CreditPrecent = Creat.CreatCredit(MoneySumm, Yuers, bet);
                                     item.Money = item.Money + Convert.ToInt32(MoneySumm);
                                     int MoneyCreditMSg = Convert.ToInt32(MoneySumm);
                                     MSG mSG = ((int MoneyCr) => // метод по добавлении истории
                                     {
-                                        MainWindow.historis.Add(new FolderPeople.Histori("Credit", MoneyCr, MainWindow.Id));
+                                        MainWindow.historis.Add(new Histori("Credit", MoneyCr, MainWindow.Id));
                                     });
                                     mSG(MoneyCreditMSg);
                                 }
@@ -91,12 +93,13 @@ namespace Bank_3x
                                     InfCredit.Content = "кредит можно взять только с 100000 р ";
                                 }
                             }
-                            else
+                            catch (FormatException)
                             {
                                 MoneyCredit.Clear();
                                 MothEyars.Clear();
                                 MessageBox.Show("нужно вписать только числа");
                             }
+
                         }
                         else
                         {

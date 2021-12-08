@@ -40,7 +40,7 @@ namespace Bank_3x
             {
                 if (MainWindow.Id == item2.ID)//условие по уменьшении денег из своего счета
                 {
-                    if (item2.OpenCard ==false)
+                    if (item2.OpenCard == false)
                     {
                         MessageBox.Show("Ваш аккаунт заблокирован, из-за большого количества переводов денег на другой счет");
                     }
@@ -59,8 +59,10 @@ namespace Bank_3x
                         {
                             summa = 3;//для VIP пользователя 
                         }
-                        if (Regex.IsMatch(MoneyTranslate.Text, "[0-9]") && Regex.IsMatch(CardNumberTranslate.Text, "[0-9]"))
+                        try
                         {
+
+
                             if (item2.Money < 0)
                             {
                                 labelMessege.Content = "на счету слишком мало денег";//сообщение 
@@ -95,8 +97,9 @@ namespace Bank_3x
                                 }
                             }
                         }
-                        if (Regex.IsMatch(MoneyTranslate.Text, "[a-zA-Z]"))
+                        catch (FormatException)
                         {
+
                             MoneyTranslate.Clear();
                             MessageBox.Show("нужно вписывать числа");
 

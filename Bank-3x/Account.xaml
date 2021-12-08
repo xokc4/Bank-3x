@@ -15,7 +15,7 @@
         <Button Content="капитализация" x:Name="Capitalization" Click="Capitalization_Click" HorizontalAlignment="Left" Height="25" Margin="34,286,0,0" VerticalAlignment="Top" Width="112"/>
         <Button Content="взять кредит" x:Name="Сredit" Click="Сredit_Click" HorizontalAlignment="Left" Margin="463,286,0,0" VerticalAlignment="Top" Width="124" Height="25"/>
         <Label Content="" x:Name="CapitalizationNumber" HorizontalAlignment="Left" Height="28" Margin="34,329,0,0" VerticalAlignment="Top" Width="201"/>
-        <Label Content="" x:Name="СreditNumber" HorizontalAlignment="Left" Height="28" Margin="438,325,0,0" VerticalAlignment="Top" Width="148"/>
+        <Label Content="" x:Name="СreditNumber" HorizontalAlignment="Left" Height="28" Margin="463,325,0,0" VerticalAlignment="Top" Width="155"/>
         <Label x:Name="CreditPresent" HorizontalAlignment="Left" Height="26" Margin="330,372,0,0" VerticalAlignment="Top" Width="256"/>
         <ListBox x:Name="MSGSupport" 
                  Margin="288,24,0,241" HorizontalAlignment="Left" Width="322" 
@@ -33,7 +33,7 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <Button Content="изменить данные о себе" x:Name="changeContact" Click="changeContact_Click" HorizontalAlignment="Left" Margin="444,0,0,0" VerticalAlignment="Center" Width="162" Height="25"/>
+        <Button Content="изменить данные о себе" x:Name="changeContact" Click="changeContact_Click" HorizontalAlignment="Left" Margin="448,0,0,0" VerticalAlignment="Center" Width="162" Height="25"/>
         <Button Content="выйти из аккаунта" x:Name="ExitAccount" Click="ExitAccount_Click" HorizontalAlignment="Left" Height="39" Margin="10,374,0,0" VerticalAlignment="Top" Width="124"/>
     </Grid>
 </Window>

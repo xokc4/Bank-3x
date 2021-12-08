@@ -148,6 +148,12 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CreatBD\CreatSumm.csproj">
+      <Project>{348f80dd-7f1a-4375-bdeb-cd8e8d79107b}</Project>
+      <Name>CreatSumm</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
