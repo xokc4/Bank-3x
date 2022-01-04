@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -113,11 +114,8 @@ namespace Bank_3x
                             MessageBox.Show("пополните счет");
                         }
                     }
-
                 }
-
             }
-
         }
         /// <summary>
         /// кнопка по открытии нового окна для перевода денег 
@@ -210,12 +208,13 @@ namespace Bank_3x
                     }
                     else
                     {
-                        
+
                     }
                 }
             }
+            Thread ThreadSave = new Thread(MainWindow.UpDate);
+            ThreadSave.Start();
         }
-        
         /// <summary>
         /// создание коллекции пользователей
         /// </summary>
@@ -226,7 +225,7 @@ namespace Bank_3x
 
         private void ToSend_Click(object sender, RoutedEventArgs e)
         {
-
+            MainWindow.account.Close();
         }
         private void RefreshHistoriMethod()
         {
@@ -237,18 +236,18 @@ namespace Bank_3x
         {
             List<Histori> HistoriMain = new List<Histori>();// твоя таблицы историй переводов
            foreach(var item in MainWindow.historis)
-            {
+           {
                 if(MainWindow.Id == item.IdAccount)// добавление в таблицу твоей истории
                 {
                     HistoriMain.Add(item);
                 }
-            }
+           }
             return HistoriMain;
         }
 
         private void changeContact_Click(object sender, RoutedEventArgs e)// открытие окна для изменений информации о тебе
         {
-        CangneContact change = new CangneContact();
+         CangneContact change = new CangneContact();
             change.Show();
         }
         /// <summary>
@@ -256,12 +255,10 @@ namespace Bank_3x
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ExitAccount_Click(object sender, RoutedEventArgs e)
+        private  void ExitAccount_Click(object sender, RoutedEventArgs e)
         {
-          
             Histori.numberAttempts = 0;
             MainWindow.account.Close();
-
         }
     }
 }

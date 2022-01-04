@@ -153,6 +153,10 @@
       <Project>{348f80dd-7f1a-4375-bdeb-cd8e8d79107b}</Project>
       <Name>CreatSumm</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SqlConnection\SqlConn.csproj">
+      <Project>{3597c086-87cf-4d9a-ba61-c219681c5817}</Project>
+      <Name>SqlConn</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

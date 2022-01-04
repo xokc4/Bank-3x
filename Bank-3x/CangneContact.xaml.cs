@@ -61,6 +61,7 @@ namespace Bank_3x
                     catch(FormatException) { MessageBox.Show("пароль состаит только из чисел"); }
                 }
             }
+            
         }
     }
 }

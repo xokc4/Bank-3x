@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bank-3x", "Bank-3x\Bank-3x.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CreatSumm", "CreatBD\CreatSumm.csproj", "{348F80DD-7F1A-4375-BDEB-CD8E8D79107B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SqlConn", "SqlConnection\SqlConn.csproj", "{3597C086-87CF-4D9A-BA61-C219681C5817}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{348F80DD-7F1A-4375-BDEB-CD8E8D79107B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{348F80DD-7F1A-4375-BDEB-CD8E8D79107B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{348F80DD-7F1A-4375-BDEB-CD8E8D79107B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3597C086-87CF-4D9A-BA61-C219681C5817}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3597C086-87CF-4D9A-BA61-C219681C5817}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3597C086-87CF-4D9A-BA61-C219681C5817}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3597C086-87CF-4D9A-BA61-C219681C5817}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

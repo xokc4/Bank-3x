@@ -2,6 +2,8 @@
 using Bank_3x.FolderPeople;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Threading;
 using System.Windows;
 using System.Windows.Threading;
 
@@ -15,20 +17,30 @@ namespace Bank_3x
     /// </summary>
     public partial class MainWindow : Window
     {
+        /// <summary>
+        /// происходит Connection к SQL
+        /// </summary>
+        public static SqlConnectionStringBuilder sql = SqlConn.SqlConn.sql;
+        /// <summary>
+        /// строка подключения
+        /// </summary>
+        public static SqlConnection sqlConnection = SqlConn.SqlConn.sqlConnection;
+
         DispatcherTimer TimeRefresh = new DispatcherTimer();// время рефреш
         static public List<Histori> historis = new List<Histori>();// коллекция истории переведов и тд
          public static Account account = new Account();
         /// <summary>
         /// статичный id 
         /// </summary>
-        static public int Id;
+        static public int Id =-1;
         /// <summary>
         /// запуск приложения и создание бд(пользователей)
         /// </summary>
         public MainWindow()
         {
             InitializeComponent();
-            Account.CreateBD();// создание пользователей
+            Thread ThreadSql = new Thread(SqlBd);
+            ThreadSql.Start();        
             People.ItemsSource = Account.peoplePost;//передача информации пользователей
             Refresh();
         }
@@ -44,7 +56,6 @@ namespace Bank_3x
             People.ItemsSource = null;
             People.ItemsSource = Account.peoplePost;
         }
-
         /// <summary>
         /// при нажатии на кнопку происходит проверка введённых данных 
         /// </summary>
@@ -102,6 +113,150 @@ namespace Bank_3x
         public void NewWindow()
         {
             account.Show();
+        }
+        /// <summary>
+        /// метод по передачи информации из SQL в коллекцию пользователей 
+        /// </summary>
+        public void SqlBd()
+        {
+            try
+            {
+                sqlConnection.Open();
+                var q = @"SELECT 
+	            People.ID,
+	            People.Name,
+	            People.LastName,
+	            People.PassWord,
+	            People.Money,
+	            People.CardNumber,
+	            People.CapitalMoney,
+	            People.Credit,
+	            People.CreditPrecent,
+	            TypePeople.TyPeople,
+	            People.OpenCard
+                FROM People, TypePeople
+                WHERE People.Type = TypePeople.ID;";
+                SqlCommand command = new SqlCommand(q, sqlConnection);
+                SqlDataReader reader = command.ExecuteReader();
+                List<PeoplePost> people = new List<PeoplePost>();
+                while(reader.Read())
+                {
+                    people.Add(new PeoplePost(reader["Name"].ToString(),reader["LastName"].ToString(), 
+
+                    reader["PassWord"].ToString(), Convert.ToInt32(reader["CardNumber"]), 
+
+                    Convert.ToInt32(reader["Money"]), Convert.ToInt32(reader["CapitalMoney"]),
+
+                    Convert.ToInt32(reader["Credit"]), Convert.ToInt32(reader["CreditPrecent"]),
+
+                    reader["TyPeople"].ToString(), Convert.ToInt32(reader["ID"]),Convert.ToBoolean(reader["OpenCard"])));
+                }
+                Account.peoplePost = people; 
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message.ToString());
+            }
+            finally
+            {
+                sqlConnection.Close();
+            }
+        }
+        /// <summary>
+        /// Обнавление информации о пользователе в SQL
+        /// </summary>
+        public static void UpDate()
+        {
+            try
+            {
+               if(Id == -1)
+               {
+
+               }
+               else
+               {
+                    sqlConnection.Open();
+                    var q = @"";
+                    foreach (var people in Account.peoplePost)
+                    {
+                        if (Id == people.ID)
+                        {
+                            int boll = ConBool(people.OpenCard);
+                            
+                        q = $@"UPDATE People
+                        SET People.Name = '{people.Name}',
+	                        People.LastName ='{people.LastName}',
+	                        People.PassWord ='{people.Password}',
+	                        People.Money ='{people.Money}',
+	                        People.CardNumber ='{people.CardNumber}',
+	                        People.CapitalMoney ='{people.CapitalMoney}',
+	                        People.Credit ='{people.Credit}',
+	                        People.CreditPrecent ='{people.CreditPrecent}',
+	                        People.OpenCard ='{boll}'
+                        WHERE People.ID = '{Id}';";
+                        }
+                    }
+                    SqlCommand command = new SqlCommand(q, sqlConnection);
+                    command.ExecuteNonQuery();
+               } 
+            }
+            catch (Exception e)
+            {
+            }
+            finally
+            {
+                sqlConnection.Close();
+            }
+        }
+        /// <summary>
+        /// скрипт в SQL для перевода денег пользователю
+        /// </summary>
+        /// <param name="idPeople"></param>
+        public static void UpDateTranslate(object idPeople)
+        {
+            int id = Convert.ToInt32(idPeople);
+            try
+            {
+                    sqlConnection.Open();
+                    var q = @"";
+                    foreach (var people in Account.peoplePost)
+                    {
+                        if (id == people.ID)
+                        {
+                            int boll = ConBool(people.OpenCard);
+
+                            q = $@"UPDATE People
+                        SET People.Money ='{people.Money}'
+                        WHERE People.ID = '{idPeople}';";
+                        }
+                    }
+                    SqlCommand command = new SqlCommand(q, sqlConnection);
+                    command.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.ToString());
+            }
+            finally
+            {
+                sqlConnection.Close();
+            }
+        }
+        /// <summary>
+        /// метод по записи Bool значений в SQL
+        /// </summary>
+        /// <param name="e"></param>
+        /// <returns></returns>
+        public static int ConBool(bool e)
+        {
+            if (e == true)
+            {
+                return 1;
+            }
+            else
+            {
+                return 0;
+            }
         }
     }
 }

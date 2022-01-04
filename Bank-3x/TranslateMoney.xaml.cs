@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -76,12 +77,18 @@ namespace Bank_3x
                                 {
                                     if (Convert.ToInt32(CardNumberTranslate.Text) == item.CardNumber)//нахождение аккаунта
                                     {
+
                                         item.Money = item.Money + Convert.ToInt32(MoneyTranslate.Text);//перевод денег
                                         labelMessege.Content = "перевод был совершон";//сообщение
                                         HistoriMsg histori = ((int Money) =>//метод по добавлении истории в коллекцию
                                         {
                                             MainWindow.historis.Add(new FolderPeople.Histori("Translat", Money, MainWindow.Id));
                                         });
+
+
+                                        Thread ThreadTranslate = new Thread(new ParameterizedThreadStart(MainWindow.UpDateTranslate));
+                                        ThreadTranslate.Start(item.ID);
+
                                         histori(Histori321);
                                         HistoriMsg historiPeopeleTranslate = ((int Money) =>//метод по добавлении истории в коллекцию другому пользователю
                                         {
