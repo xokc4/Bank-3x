@@ -1,0 +1,21 @@
+﻿<Window x:Class="Bank_3x.SqlParametrs"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Bank_3x"
+        mc:Ignorable="d"
+        Title="SqlParametrs" Height="300" Width="300">
+    <Grid Margin="0,0,0,-6">
+        <TextBox HorizontalAlignment="Left" Height="25" Margin="144,55,0,0" TextWrapping="Wrap" x:Name="DataSourse" VerticalAlignment="Top" Width="114"/>
+        <TextBox HorizontalAlignment="Left" Height="24" Margin="144,110,0,0" TextWrapping="Wrap" x:Name="InitialCatalog" VerticalAlignment="Top" Width="114"/>
+        <TextBlock HorizontalAlignment="Left" Margin="17,55,0,0" TextWrapping="Wrap" Text="DataSource" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="17,170,0,0" TextWrapping="Wrap" Text="IntegratedSecurity" VerticalAlignment="Top" Width="101"/>
+        <TextBlock HorizontalAlignment="Left" Height="16" Margin="17,114,0,0" TextWrapping="Wrap" Text="InitialCatalog" VerticalAlignment="Top" Width="93"/>
+        <ComboBox HorizontalAlignment="Left" Margin="144,165,0,0" VerticalAlignment="Top" x:Name="IntegratedSecurity" Width="114" Height="25">
+            <TextBlock x:Name="CapitalisationYES">true</TextBlock>
+            <TextBlock x:Name="CapitalisationNO">false</TextBlock>
+        </ComboBox>
+        <Button Content="Изменить данные подключения" HorizontalAlignment="Left" x:Name="ClickSave" Click="ClickSave_Click"  Margin="77,238,0,0" VerticalAlignment="Top" Width="181"/>
+    </Grid>
+</Window>

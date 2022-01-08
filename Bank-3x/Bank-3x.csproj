@@ -77,6 +77,9 @@
       <DependentUpon>Credit.xaml</DependentUpon>
     </Compile>
     <Compile Include="FolderPeople\Histori.cs" />
+    <Compile Include="SqlParametrs.xaml.cs">
+      <DependentUpon>SqlParametrs.xaml</DependentUpon>
+    </Compile>
     <Compile Include="TranslateMoney.xaml.cs">
       <DependentUpon>TranslateMoney.xaml</DependentUpon>
     </Compile>
@@ -116,6 +119,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="SqlParametrs.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="TranslateMoney.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

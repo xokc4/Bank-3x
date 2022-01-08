@@ -39,8 +39,9 @@ namespace Bank_3x
         public MainWindow()
         {
             InitializeComponent();
-            Thread ThreadSql = new Thread(SqlBd);
-            ThreadSql.Start();        
+            SqlConn.SqlConn.SqlIf();
+            SqlBd();
+            
             People.ItemsSource = Account.peoplePost;//передача информации пользователей
             Refresh();
         }
@@ -138,24 +139,37 @@ namespace Bank_3x
                 WHERE People.Type = TypePeople.ID;";
                 SqlCommand command = new SqlCommand(q, sqlConnection);
                 SqlDataReader reader = command.ExecuteReader();
-                List<PeoplePost> people = new List<PeoplePost>();
-                while(reader.Read())
-                {
-                    people.Add(new PeoplePost(reader["Name"].ToString(),reader["LastName"].ToString(), 
+                
+                    List<PeoplePost> people = new List<PeoplePost>();
+                    while (reader.Read())
+                    {
+                        people.Add(new PeoplePost(reader["Name"].ToString(), reader["LastName"].ToString(),
 
-                    reader["PassWord"].ToString(), Convert.ToInt32(reader["CardNumber"]), 
+                        reader["PassWord"].ToString(), Convert.ToInt32(reader["CardNumber"]),
 
-                    Convert.ToInt32(reader["Money"]), Convert.ToInt32(reader["CapitalMoney"]),
+                        Convert.ToInt32(reader["Money"]), Convert.ToInt32(reader["CapitalMoney"]),
 
-                    Convert.ToInt32(reader["Credit"]), Convert.ToInt32(reader["CreditPrecent"]),
+                        Convert.ToInt32(reader["Credit"]), Convert.ToInt32(reader["CreditPrecent"]),
 
-                    reader["TyPeople"].ToString(), Convert.ToInt32(reader["ID"]),Convert.ToBoolean(reader["OpenCard"])));
-                }
-                Account.peoplePost = people; 
+                        reader["TyPeople"].ToString(), Convert.ToInt32(reader["ID"]), Convert.ToBoolean(reader["OpenCard"])));
+                    }
+                    Account.peoplePost = people;
             }
-            catch (Exception e)
+            catch(SqlException e)
             {
-                MessageBox.Show(e.Message.ToString());
+                if(e.State == 1)
+                {
+                    SqlConn.SqlConn.SqlBDCreat();
+                    MessageBox.Show("Были созданы клиенты для банка, тк не было никого");
+                }
+                else
+                {
+                    SqlParametrs sqlParametrs = new SqlParametrs();
+                    sqlParametrs.Show();
+                    this.Close();
+                    MessageBox.Show("Если вышла ошибка то проблема в подключении базы данных(SQL server), для решения этой проблемы. №1 создайте " +
+                        "базу данных, №2 напишите данные о базе в форму, если не получилось посмотрите правильность написания.");
+                }
             }
             finally
             {
@@ -171,7 +185,6 @@ namespace Bank_3x
             {
                if(Id == -1)
                {
-
                }
                else
                {
@@ -202,6 +215,7 @@ namespace Bank_3x
             }
             catch (Exception e)
             {
+                
             }
             finally
             {
