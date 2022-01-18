@@ -2,7 +2,9 @@
 using Bank_3x.FolderPeople;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.SqlClient;
+using System.Linq;
 using System.Threading;
 using System.Windows;
 using System.Windows.Threading;
@@ -17,6 +19,8 @@ namespace Bank_3x
     /// </summary>
     public partial class MainWindow : Window
     {
+       static Entities1 entities = new Entities1();
+       
         /// <summary>
         /// происходит Connection к SQL
         /// </summary>
@@ -39,9 +43,8 @@ namespace Bank_3x
         public MainWindow()
         {
             InitializeComponent();
-            SqlConn.SqlConn.SqlIf();
-            SqlBd();
-            
+            SqlEntityFrmework();
+
             People.ItemsSource = Account.peoplePost;//передача информации пользователей
             Refresh();
         }
@@ -114,66 +117,57 @@ namespace Bank_3x
         public void NewWindow()
         {
             account.Show();
-        }
+        }       
         /// <summary>
-        /// метод по передачи информации из SQL в коллекцию пользователей 
+        /// база данных через entityFramework
         /// </summary>
-        public void SqlBd()
+        public void SqlEntityFrmework()
         {
             try
             {
-                sqlConnection.Open();
-                var q = @"SELECT 
-	            People.ID,
-	            People.Name,
-	            People.LastName,
-	            People.PassWord,
-	            People.Money,
-	            People.CardNumber,
-	            People.CapitalMoney,
-	            People.Credit,
-	            People.CreditPrecent,
-	            TypePeople.TyPeople,
-	            People.OpenCard
-                FROM People, TypePeople
-                WHERE People.Type = TypePeople.ID;";
-                SqlCommand command = new SqlCommand(q, sqlConnection);
-                SqlDataReader reader = command.ExecuteReader();
-                
-                    List<PeoplePost> people = new List<PeoplePost>();
-                    while (reader.Read())
-                    {
-                        people.Add(new PeoplePost(reader["Name"].ToString(), reader["LastName"].ToString(),
-
-                        reader["PassWord"].ToString(), Convert.ToInt32(reader["CardNumber"]),
-
-                        Convert.ToInt32(reader["Money"]), Convert.ToInt32(reader["CapitalMoney"]),
-
-                        Convert.ToInt32(reader["Credit"]), Convert.ToInt32(reader["CreditPrecent"]),
-
-                        reader["TyPeople"].ToString(), Convert.ToInt32(reader["ID"]), Convert.ToBoolean(reader["OpenCard"])));
-                    }
-                    Account.peoplePost = people;
-            }
-            catch(SqlException e)
-            {
-                if(e.State == 1)
+                var refresh = entities.People.Join(entities.TypePeople,
+                     peopleBD => peopleBD.Type,
+                     typePeopleBD => typePeopleBD.ID,
+                     (peopleBD, typePeopleBD) => new
+                     {
+                         peopleBD.ID,
+                         peopleBD.Name,
+                         peopleBD.LastName,
+                         peopleBD.PassWord,
+                         peopleBD.Money,
+                         peopleBD.CardNumber,
+                         peopleBD.CapitalMoney,
+                         peopleBD.Credit,
+                         peopleBD.CreditPrecent,
+                         typePeopleBD.TyPeople,
+                         peopleBD.OpenCard
+                     });
+                List <PeoplePost> people = new List<PeoplePost>();
+                foreach (var item in refresh)
                 {
-                    SqlConn.SqlConn.SqlBDCreat();
+                    people.Add(new PeoplePost(item.Name.ToString(), item.LastName.ToString(),
+
+                    item.PassWord.ToString(), item.CardNumber,
+
+                    Convert.ToInt32(item.Money), Convert.ToInt32(item.CapitalMoney),
+
+                    Convert.ToInt32(item.Credit), Convert.ToInt32(item.CreditPrecent),
+
+                    item.TyPeople.ToString(), Convert.ToInt32(item.ID), Convert.ToBoolean(item.OpenCard)));
+                }
+                Account.peoplePost = people;
+                if (Account.peoplePost.Count < 1)
+                {
+                    SqlBDCreat();
                     MessageBox.Show("Были созданы клиенты для банка, тк не было никого");
                 }
-                else
-                {
+            }
+            catch(Exception e)
+            {
                     SqlParametrs sqlParametrs = new SqlParametrs();
                     sqlParametrs.Show();
                     this.Close();
-                    MessageBox.Show("Если вышла ошибка то проблема в подключении базы данных(SQL server), для решения этой проблемы. №1 создайте " +
-                        "базу данных, №2 напишите данные о базе в форму, если не получилось посмотрите правильность написания.");
-                }
-            }
-            finally
-            {
-                sqlConnection.Close();
+                    
             }
         }
         /// <summary>
@@ -181,6 +175,7 @@ namespace Bank_3x
         /// </summary>
         public static void UpDate()
         {
+            
             try
             {
                if(Id == -1)
@@ -188,34 +183,32 @@ namespace Bank_3x
                }
                else
                {
-                    sqlConnection.Open();
                     var q = @"";
                     foreach (var people in Account.peoplePost)
                     {
                         if (Id == people.ID)
                         {
                             int boll = ConBool(people.OpenCard);
-                            
-                        q = $@"UPDATE People
-                        SET People.Name = '{people.Name}',
-	                        People.LastName ='{people.LastName}',
-	                        People.PassWord ='{people.Password}',
-	                        People.Money ='{people.Money}',
-	                        People.CardNumber ='{people.CardNumber}',
-	                        People.CapitalMoney ='{people.CapitalMoney}',
-	                        People.Credit ='{people.Credit}',
-	                        People.CreditPrecent ='{people.CreditPrecent}',
-	                        People.OpenCard ='{boll}'
-                        WHERE People.ID = '{Id}';";
+                            var item = entities.People.Where(e => e.ID == Id).FirstOrDefault();
+                            item.Name = people.Name;
+                            item.LastName = people.LastName;
+                            item.PassWord = Convert.ToInt32(people.Password);
+                            item.Money = people.Money;
+                            item.CardNumber = people.CardNumber;
+                            item.CapitalMoney = Convert.ToInt32(people.CapitalMoney);
+                            item.Credit = people.Credit;
+                            item.CreditPrecent = people.CreditPrecent;
+                            item.OpenCard = Convert.ToByte(1);
+                            entities.Entry(item).State = EntityState.Modified;
+                            entities.SaveChanges();
                         }
                     }
-                    SqlCommand command = new SqlCommand(q, sqlConnection);
-                    command.ExecuteNonQuery();
-               } 
+               }
             }
             catch (Exception e)
             {
-                
+
+                MessageBox.Show(e.Message.ToString());
             }
             finally
             {
@@ -228,6 +221,7 @@ namespace Bank_3x
         /// <param name="idPeople"></param>
         public static void UpDateTranslate(object idPeople)
         {
+            
             int id = Convert.ToInt32(idPeople);
             try
             {
@@ -238,14 +232,12 @@ namespace Bank_3x
                         if (id == people.ID)
                         {
                             int boll = ConBool(people.OpenCard);
-
-                            q = $@"UPDATE People
-                        SET People.Money ='{people.Money}'
-                        WHERE People.ID = '{idPeople}';";
+                            var SqlTranslate = entities.People.Where(e => e.ID == id).FirstOrDefault();
+                           SqlTranslate.Money = people.Money;
+                           entities.Entry(SqlTranslate).State = EntityState.Modified;
+                           entities.SaveChanges();
                         }
                     }
-                    SqlCommand command = new SqlCommand(q, sqlConnection);
-                    command.ExecuteNonQuery();
             }
             catch (Exception e)
             {
@@ -270,6 +262,46 @@ namespace Bank_3x
             else
             {
                 return 0;
+            }
+        }
+        /// <summary>
+        /// Добавлене в базу клиентов
+        /// </summary>
+        public void SqlBDCreat()
+        {
+            try
+            {
+                People people1 = new People("Name_1", "LastName_1", 56678, 119324110, 45000, 0, 0, 0, 1,  Convert.ToByte(1));
+                People people2 = new People("Name_2", "LastName_2", 87978, 216554220, 95000, 0, 0, 0, 1, Convert.ToByte(1));
+                People people3 = new People("Name_3", "LastName_3", 25879, 229654323, 75000, 0, 0, 0, 1, Convert.ToByte(1));
+                People people4 = new People("Name_4", "LastName_4", 57868, 432323360, 31000, 0, 0, 0, 1,  Convert.ToByte(1));
+                People people5 = new People("Name_5", "LastName_5", 89055, 679321780, 18000, 0, 0, 0, 1, Convert.ToByte(1));
+                People people6 = new People("Name_6", "LastName_6", 25467, 559323389, 38800, 0, 0, 0, 2, Convert.ToByte(1));
+                People people7 = new People("Name_7", "LastName_7", 13566, 336544578, 99000, 0, 0, 0, 2, Convert.ToByte(1));
+                People people8 = new People("Name_8", "LastName_8", 36790, 329324099, 10000, 0, 0, 0, 2, Convert.ToByte(2));
+                People people9 = new People("Name_9", "LastName_9", 58327, 316767730, 4000, 0, 0, 0, 1, Convert.ToByte(2));
+                People people10 = new People("Name_10", "LastName_10", 68908, 143527660, 66000, 0, 0, 0, 1, Convert.ToByte(2));
+                People people11 = new People("Name_11", "LastName_11", 56734, 743876986, 7800, 0, 0, 0, 3, Convert.ToByte(2));
+                People people12 = new People("Name_12", "LastName_12", 89047, 973609934, 50000, 0, 0, 0, 3, Convert.ToByte(2));
+                People people13 = new People("Name_13", "LastName_13", 14578, 904234578, 12000, 0, 0, 0, 3, Convert.ToByte(3));
+                People people14 = new People("Name_14", "LastName_14", 87478, 358790990, 23000, 0, 0, 0, 3, Convert.ToByte(3));
+                People people15 = new People("Name_15", "LastName_15", 46588, 768087409, 46600, 0, 0, 0, 2, Convert.ToByte(3));
+
+                var refreshSql = entities.People;
+                var BDPeopleSql = new List<People>() { people1, people2, people3, people4, people5, people6, people7, people8, people9, people10, people11, people12, people13, people14, people15 };
+                foreach(var item in BDPeopleSql)
+                {
+                    entities.People.Add(item);
+                }
+                entities.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
+            finally
+            {
+                this.Close();
             }
         }
     }
