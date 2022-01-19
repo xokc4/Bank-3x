@@ -22,8 +22,7 @@ namespace Bank_3x
         public SqlParametrs()
         {
             InitializeComponent();
-            MessageBox.Show("Если вышла ошибка то проблема в подключении базы данных(SQL server), для решения этой проблемы. №1 создайте " +
-                        "базу данных, №2 напишите данные о базе в форму, если не получилось посмотрите правильность написания.");
+            
         }
         /// <summary>
         /// передача данных для метода по создании файла с параметрами подключения
@@ -34,6 +33,11 @@ namespace Bank_3x
         {
             SqlConn.SqlConn.sqlconFile(DataSourse.Text.ToString(), InitialCatalog.Text.ToString(), Convert.ToBoolean(IntegratedSecurity.Text));
             MessageBox.Show("изменение были совершены, перезапустите приложение");
+        }
+        public void MessageException()
+        {
+            MessageBox.Show("Если вышла ошибка то проблема в подключении базы данных(SQL server), для решения этой проблемы. №1 создайте " +
+                        "базу данных, №2 напишите данные о базе подключения в форму, если не получилось посмотрите правильность написания.");
         }
     }
 }

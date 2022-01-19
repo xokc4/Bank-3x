@@ -25,8 +25,11 @@ namespace Bank_3x
             }
             catch (Exception ex)
             {
+                
                 SqlParametrs sqlParametrs = new SqlParametrs();
+                sqlParametrs.MessageException();
                 sqlParametrs.Show();
+                
             }
            
         }
