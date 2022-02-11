@@ -62,59 +62,32 @@ namespace Bank_3x
                         }
                         try
                         {
-
-
                             if (item2.Money < 0)
                             {
                                 labelMessege.Content = "на счету слишком мало денег";//сообщение 
                             }
                             if (item2.Money > 0)//условие при наличие денег
                             {
-                                int Histori321 = (Convert.ToInt32(MoneyTranslate.Text) + (Convert.ToInt32(MoneyTranslate.Text) / 100 * summa));
-                                item2.Money = item2.Money - (Convert.ToInt32(MoneyTranslate.Text) + (Convert.ToInt32(MoneyTranslate.Text) / 100 * summa));// расчет и снятие денег
-                                percentBank.Content = "комиссия  " + Convert.ToInt32(MoneyTranslate.Text) / 100 * summa;
-                                foreach (var item in Account.peoplePost)//чтение коллекции
-                                {
-                                    if (Convert.ToInt32(CardNumberTranslate.Text) == item.CardNumber)//нахождение аккаунта
-                                    {
+                                TranslateClass.Translate(MoneyTranslate.Text,  CardNumberTranslate.Text, summa);
 
-                                        item.Money = item.Money + Convert.ToInt32(MoneyTranslate.Text);//перевод денег
-                                        labelMessege.Content = "перевод был совершон";//сообщение
-                                        HistoriMsg histori = ((int Money) =>//метод по добавлении истории в коллекцию
-                                        {
-                                            MainWindow.historis.Add(new FolderPeople.Histori("Translat", Money, MainWindow.Id));
-                                        });
+                                percentBank.Content = TranslateClass.percent(MoneyTranslate.Text, summa);
 
-
-                                        Thread ThreadTranslate = new Thread(new ParameterizedThreadStart(MainWindow.UpDateTranslate));
-                                        ThreadTranslate.Start(item.ID);
-
-                                        histori(Histori321);
-                                        HistoriMsg historiPeopeleTranslate = ((int Money) =>//метод по добавлении истории в коллекцию другому пользователю
-                                        {
-                                            MainWindow.historis.Add(new FolderPeople.Histori("Translat", Money, item.ID));
-                                        });
-                                        historiPeopeleTranslate(Histori321);
-                                        MoneyTranslate.Clear();
-                                    }
-                                    if (eua == false)
-                                    {
-                                        MessageBox.Show("не правильный счет");//сообщение
-                                    }
-                                }
+                                labelMessege.Content = "перевод был совершон";//сообщение
+                                MoneyTranslate.Clear();
+                            }     
+                            if (eua == false)
+                            {
+                             MessageBox.Show("не правильный счет");//сообщение
                             }
                         }
                         catch (FormatException)
                         {
-
                             MoneyTranslate.Clear();
                             MessageBox.Show("нужно вписывать числа");
-
                         }
                     }
                 }
             }
-            
         }
         /// <summary>
         /// кнопка для закрытие окна

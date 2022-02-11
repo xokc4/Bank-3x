@@ -98,22 +98,27 @@
     <Compile Include="Capitalisation.xaml.cs">
       <DependentUpon>Capitalisation.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CapitalizationClass.cs" />
+    <Compile Include="CreatCredit.cs" />
     <Compile Include="Credit.xaml.cs">
       <DependentUpon>Credit.xaml</DependentUpon>
     </Compile>
     <Compile Include="FolderPeople\Histori.cs" />
+    <Compile Include="MainLogicWPF.cs" />
     <Compile Include="People.cs">
       <DependentUpon>BankBD.tt</DependentUpon>
     </Compile>
     <Compile Include="SqlParametrs.xaml.cs">
       <DependentUpon>SqlParametrs.xaml</DependentUpon>
     </Compile>
+    <Compile Include="TranslateClass.cs" />
     <Compile Include="TranslateMoney.xaml.cs">
       <DependentUpon>TranslateMoney.xaml</DependentUpon>
     </Compile>
     <Compile Include="TypePeople.cs">
       <DependentUpon>BankBD.tt</DependentUpon>
     </Compile>
+    <Compile Include="WorkEntity.cs" />
     <Page Include="Account.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

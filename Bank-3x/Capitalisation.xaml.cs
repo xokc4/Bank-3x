@@ -31,9 +31,6 @@ namespace Bank_3x
         public Capitalisation()
         {
             InitializeComponent();
-
-         
-
         }
         /// <summary>
         /// условие для выбора метода
@@ -71,20 +68,10 @@ namespace Bank_3x
                             {
                                 if (Convert.ToInt32(MoneyCapit.Text) > 1000 || Convert.ToInt32(MoneyCapit.Text) == 1000)// условие для размера вклада
                                 {
-                                    item.Money = item.Money - Convert.ToInt32(MoneyCapit.Text);// снятие денег с счета
+                                   CapitalizationClass.capitalizationNO(MoneyCapit.Text);
 
-                                    int MoneyHistori = Convert.ToInt32(MoneyCapit.Text);
-
-                                    MoneyEarsCapit.Content = Creat.CreatCapitNo(Convert.ToDouble(MoneyCapit.Text));
-
-                                    item.CapitalMoney = Creat.CreatCapitNo(Convert.ToDouble(MoneyCapit.Text));//формула для вклада
-
-                                    InfMoneyYears.Content = "будет через 12 месяцев";//
-                                    MSG MSGHis = ((int Money) =>//метод по добавлении истории 
-                                    {
-                                        MainWindow.historis.Add(new Histori("CapitNo", Money, MainWindow.Id));
-                                    });
-                                    MSGHis(MoneyHistori);
+                                    MoneyEarsCapit.Content = Creat.CreatCapitNo(Convert.ToDouble(MoneyCapit.Text));    
+                                    InfMoneyYears.Content = "будет через 12 месяцев";
                                 }
                                 else
                                 {
@@ -124,32 +111,20 @@ namespace Bank_3x
                     {
                         try
                         {
-
-
                             if (Convert.ToInt32(MoneyCapit.Text) <= item.Money)
                             {
                                 if (Convert.ToInt32(MoneyCapit.Text) > 1000 || Convert.ToInt32(MoneyCapit.Text) == 1000)
                                 {
-                                    int MoneyHistor = Convert.ToInt32(MoneyCapit.Text);
-                                    item.Money = item.Money - Convert.ToInt32(MoneyCapit.Text);
-                                    
-                                    item.CapitalMoney = Creat.CreatCapitYES(Convert.ToDouble(MoneyCapit.Text));
+                                   CapitalizationClass.capitalizationYES(MoneyCapit.Text);
 
                                     MoneyEarsCapit.Content = Creat.CreatCapitYES(Convert.ToDouble(MoneyCapit.Text));
-
                                     InfMoneyYears.Content = "будет через 12 месяцев";
-                                    MSG MSGHis = ((int Money) =>//метод по добавлении истории 
-                                    {
-                                        MainWindow.historis.Add(new Histori("CapitYes", Money, MainWindow.Id));
-                                    });
-                                    MSGHis(MoneyHistor);
                                 }
                                 else
                                 {
                                     MessageBoxWPF.Content = "Вклады только с 1000р";
                                 }
                             }
-
                             else
                             {
                                 MessageBoxWPF.Content = "не хватает денег";
@@ -162,7 +137,6 @@ namespace Bank_3x
                         }
                     }
                 }
-
             }
         }
         /// <summary>

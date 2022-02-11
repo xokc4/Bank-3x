@@ -75,18 +75,8 @@ namespace Bank_3x
                                         }
                                     }//условие процентной ставки
                                     PresentBet.Content = bet + "%";
-                                   
-                                    item.CreditPrecent = Creat.CreatCredit( MoneySumm, Yuers, bet);
-                                    RepaymentMoth.Content = Creat.CreatCredit(MoneySumm, Yuers, bet);
-                                    item.Credit = Convert.ToInt32(MoneySumm);
-                                    item.CreditPrecent = Creat.CreatCredit(MoneySumm, Yuers, bet);
-                                    item.Money = item.Money + Convert.ToInt32(MoneySumm);
-                                    int MoneyCreditMSg = Convert.ToInt32(MoneySumm);
-                                    MSG mSG = ((int MoneyCr) => // метод по добавлении истории
-                                    {
-                                        MainWindow.historis.Add(new Histori("Credit", MoneyCr, MainWindow.Id));
-                                    });
-                                    mSG(MoneyCreditMSg);
+                                    CreatCredit.Credit(MoneySumm, Yuers, bet);
+                                    RepaymentMoth.Content = Creat.CreatCredit(MoneySumm, Yuers, bet);                                   
                                 }
                                 else
                                 {
