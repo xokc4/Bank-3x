@@ -16,15 +16,19 @@ namespace Bank_3x
             {
                 if (MainWindow.Id == item2.ID)//условие по уменьшении денег из своего счета
                 {
+                    int MoneyTranslateMain = Convert.ToInt32(MoneyTranslate);
+                    int CardNumber = Convert.ToInt32(CardNumberTranslate);
 
-                    int Histori321 = (Convert.ToInt32(MoneyTranslate) + (Convert.ToInt32(MoneyTranslate) / 100 * summa));
-                    item2.Money = item2.Money - (Convert.ToInt32(MoneyTranslate) + (Convert.ToInt32(MoneyTranslate) / 100 * summa));// расчет и снятие денег
+                    int Histori321 = MoneyTranslateMain + (MoneyTranslateMain / 100 * summa);
+
+                    item2.Money = item2.Money - (MoneyTranslateMain + (MoneyTranslateMain / 100 * summa));// расчет и снятие денег
+
                     foreach (var item in Account.peoplePost)//чтение коллекции
                     {
-                        if (Convert.ToInt32(CardNumberTranslate) == item.CardNumber)//нахождение аккаунта
+                        if (CardNumber == item.CardNumber)//нахождение аккаунта
                         {
 
-                            item.Money = item.Money + Convert.ToInt32(MoneyTranslate);//перевод денег
+                            item.Money = item.Money + MoneyTranslateMain;//перевод денег
                             HistoriMsg histori = ((int Money) =>//метод по добавлении истории в коллекцию
                             {
                                 MainWindow.historis.Add(new FolderPeople.Histori("Translat", Money, MainWindow.Id));
@@ -46,7 +50,8 @@ namespace Bank_3x
         }
         public static string percent(string MoneyTranslate, int summa)
         {
-            return "комиссия  " + Convert.ToInt32(MoneyTranslate) / 100 * summa;
+            int MoneyTranslateMain = Convert.ToInt32(MoneyTranslate);
+            return "комиссия  " + MoneyTranslateMain / 100 * summa;
         }
     }
 }

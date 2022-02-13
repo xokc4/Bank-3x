@@ -8,7 +8,7 @@ namespace Bank_3x.FolderPeople
 {
     interface Icapitalization// интерфейс для вклада
     {
-       void capitalizationYES();
-       void capitalizationNO();
+       
+       void CapitalizationMethod();
     }
 }

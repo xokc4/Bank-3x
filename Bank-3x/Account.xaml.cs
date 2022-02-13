@@ -70,7 +70,8 @@ namespace Bank_3x
                 {
                     if (item.CapitalMoney > 0)//условие если на счету есть деньги
                     {
-                        item.Money = item.Money + Convert.ToInt32(item.CapitalMoney);// перевод суммы
+                        int capit = Convert.ToInt32(item.CapitalMoney);
+                        item.Money = item.Money + capit;// перевод суммы
                         item.CapitalMoney = 0;//обнуление вклада
                     }
                 }
@@ -111,7 +112,7 @@ namespace Bank_3x
                         }
                         else
                         {
-                            MessageBox.Show("пополните счет");
+                          Message.Text = "пополните счет";
                         }
                     }
                 }

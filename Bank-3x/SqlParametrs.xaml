@@ -7,15 +7,16 @@
         mc:Ignorable="d"
         Title="SqlParametrs" Height="300" Width="300">
     <Grid Margin="0,0,0,-6">
-        <TextBox HorizontalAlignment="Left" Height="25" Margin="144,55,0,0" TextWrapping="Wrap" x:Name="DataSourse" VerticalAlignment="Top" Width="114"/>
-        <TextBox HorizontalAlignment="Left" Height="24" Margin="144,110,0,0" TextWrapping="Wrap" x:Name="InitialCatalog" VerticalAlignment="Top" Width="114"/>
-        <TextBlock HorizontalAlignment="Left" Margin="17,55,0,0" TextWrapping="Wrap" Text="DataSource" VerticalAlignment="Top"/>
-        <TextBlock HorizontalAlignment="Left" Margin="17,170,0,0" TextWrapping="Wrap" Text="IntegratedSecurity" VerticalAlignment="Top" Width="101"/>
-        <TextBlock HorizontalAlignment="Left" Height="16" Margin="17,114,0,0" TextWrapping="Wrap" Text="InitialCatalog" VerticalAlignment="Top" Width="93"/>
-        <ComboBox HorizontalAlignment="Left" Margin="144,165,0,0" VerticalAlignment="Top" x:Name="IntegratedSecurity" Width="114" Height="25">
+        <TextBox HorizontalAlignment="Left" Height="26" Margin="144,17,0,0" TextWrapping="Wrap" x:Name="DataSourse" VerticalAlignment="Top" Width="114"/>
+        <TextBox HorizontalAlignment="Left" Height="26" Margin="144,74,0,0" TextWrapping="Wrap" x:Name="InitialCatalog" VerticalAlignment="Top" Width="114"/>
+        <TextBlock HorizontalAlignment="Left" Margin="17,17,0,0" TextWrapping="Wrap" Text="DataSource" VerticalAlignment="Top" Height="16"/>
+        <TextBlock HorizontalAlignment="Left" Margin="17,0,0,0" TextWrapping="Wrap" Text="IntegratedSecurity" VerticalAlignment="Center" Width="101" Height="18"/>
+        <TextBlock HorizontalAlignment="Left" Height="17" Margin="17,79,0,0" TextWrapping="Wrap" Text="InitialCatalog" VerticalAlignment="Top" Width="93"/>
+        <ComboBox HorizontalAlignment="Left" Margin="144,0,0,0" VerticalAlignment="Center" x:Name="IntegratedSecurity" Width="114" Height="26">
             <TextBlock x:Name="CapitalisationYES">true</TextBlock>
             <TextBlock x:Name="CapitalisationNO">false</TextBlock>
         </ComboBox>
-        <Button Content="Изменить данные подключения" HorizontalAlignment="Left" x:Name="ClickSave" Click="ClickSave_Click"  Margin="77,238,0,0" VerticalAlignment="Top" Width="181"/>
+        <Button Content="Изменить данные подключения" HorizontalAlignment="Left" x:Name="ClickSave" Click="ClickSave_Click"  Margin="77,192,0,0" VerticalAlignment="Top" Width="181"/>
+        <TextBlock HorizontalAlignment="Left" Margin="17,231,0,0" x:Name="MessageText" TextWrapping="Wrap" VerticalAlignment="Top" Width="273" Height="36"/>
     </Grid>
 </Window>

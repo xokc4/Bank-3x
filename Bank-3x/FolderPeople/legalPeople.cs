@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Bank_3x.FolderPeople
 {
-    public class legalPeople : PeoplePost
+    public class LegalPeople : PeoplePost
     {
-        public legalPeople(string name, string lastName, string password, int cardNumber, int money, int capitalMoney, int credit, int creditPrecent, string type, int iD, bool openCard) : base(name, lastName, password, cardNumber, money, capitalMoney, credit, creditPrecent, type, iD, openCard)
+        public LegalPeople(string name, string lastName, string password, int cardNumber, int money, int capitalMoney, int credit, int creditPrecent, string type, int iD, bool openCard) : base(name, lastName, password, cardNumber, money, capitalMoney, credit, creditPrecent, type, iD, openCard)
         {
         }
     }

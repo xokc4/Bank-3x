@@ -58,7 +58,7 @@ namespace Bank_3x
                     
                         item.Password = ChangePassword.Text;//передача данных
                     }
-                    catch(FormatException) { MessageBox.Show("пароль состаит только из чисел"); }
+                    catch(FormatException) { MessageText.Text= "пароль состаит только из чисел"; }
                 }
             }
             

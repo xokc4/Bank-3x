@@ -35,5 +35,6 @@
         </ListBox>
         <Button Content="изменить данные о себе" x:Name="changeContact" Click="changeContact_Click" HorizontalAlignment="Left" Margin="448,0,0,0" VerticalAlignment="Center" Width="162" Height="25"/>
         <Button Content="выйти из аккаунта" x:Name="ExitAccount" Click="ExitAccount_Click" HorizontalAlignment="Left" Height="39" Margin="10,374,0,0" VerticalAlignment="Top" Width="124"/>
+        <TextBlock HorizontalAlignment="Left" Margin="34,148,0,0" TextWrapping="Wrap" x:Name="Message" VerticalAlignment="Top" Height="28" Width="201" Foreground="#FFFF0909"/>
     </Grid>
 </Window>

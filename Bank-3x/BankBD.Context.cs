@@ -23,7 +23,9 @@ namespace Bank_3x
             {
                 Database.Connection.ConnectionString += SqlConn.SqlConn.SqlIf();//строка подключения
             }
+#pragma warning disable CS0168 // Переменная "ex" объявлена, но ни разу не использована.
             catch (Exception ex)
+#pragma warning restore CS0168 // Переменная "ex" объявлена, но ни разу не использована.
             {
                 
                 SqlParametrs sqlParametrs = new SqlParametrs();

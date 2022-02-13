@@ -2,43 +2,17 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Bank_3x
 {
-    public static class WorkEntity
+    public class WorkEntity
     {
-        /// <summary>
-        /// Создания пользователей в бд
-        /// </summary>
-        static public void SqlCreat()
-        {
-            People people1 = new People("Name_1", "LastName_1", 56678, 119324110, 45000, 0, 0, 0, 1, Convert.ToByte(1));
-            People people2 = new People("Name_2", "LastName_2", 87978, 216554220, 95000, 0, 0, 0, 1, Convert.ToByte(1));
-            People people3 = new People("Name_3", "LastName_3", 25879, 229654323, 75000, 0, 0, 0, 1, Convert.ToByte(1));
-            People people4 = new People("Name_4", "LastName_4", 57868, 432323360, 31000, 0, 0, 0, 1, Convert.ToByte(1));
-            People people5 = new People("Name_5", "LastName_5", 89055, 679321780, 18000, 0, 0, 0, 1, Convert.ToByte(1));
-            People people6 = new People("Name_6", "LastName_6", 25467, 559323389, 38800, 0, 0, 0, 2, Convert.ToByte(1));
-            People people7 = new People("Name_7", "LastName_7", 13566, 336544578, 99000, 0, 0, 0, 2, Convert.ToByte(1));
-            People people8 = new People("Name_8", "LastName_8", 36790, 329324099, 10000, 0, 0, 0, 2, Convert.ToByte(2));
-            People people9 = new People("Name_9", "LastName_9", 58327, 316767730, 4000, 0, 0, 0, 1, Convert.ToByte(2));
-            People people10 = new People("Name_10", "LastName_10", 68908, 143527660, 66000, 0, 0, 0, 1, Convert.ToByte(2));
-            People people11 = new People("Name_11", "LastName_11", 56734, 743876986, 7800, 0, 0, 0, 3, Convert.ToByte(2));
-            People people12 = new People("Name_12", "LastName_12", 89047, 973609934, 50000, 0, 0, 0, 3, Convert.ToByte(2));
-            People people13 = new People("Name_13", "LastName_13", 14578, 904234578, 12000, 0, 0, 0, 3, Convert.ToByte(3));
-            People people14 = new People("Name_14", "LastName_14", 87478, 358790990, 23000, 0, 0, 0, 3, Convert.ToByte(3));
-            People people15 = new People("Name_15", "LastName_15", 46588, 768087409, 46600, 0, 0, 0, 2, Convert.ToByte(3));
-
-            var refreshSql = MainWindow.entities.People;
-            var BDPeopleSql = new List<People>() { people1, people2, people3, people4, people5, people6, people7, people8, people9, people10, people11, people12, people13, people14, people15 };
-            foreach (var item in BDPeopleSql)
-            {
-                MainWindow.entities.People.Add(item);
-            }
-            MainWindow.entities.SaveChanges();
-        }
+        static private string NewUSer = @"NewUsers.txt";
+        
         /// <summary>
         /// обнoвление данных в sql
         /// </summary>
@@ -54,14 +28,18 @@ namespace Bank_3x
                 {
                     if (MainWindow.Id == people.ID)
                     {
+                        int password = Convert.ToInt32(people.Password);
+                        int Capit = Convert.ToInt32(people.CapitalMoney);
                         int boll = ConBool(people.OpenCard);
+
                         var item = MainWindow.entities.People.Where(e => e.ID == MainWindow.Id).FirstOrDefault();
+
                         item.Name = people.Name;
                         item.LastName = people.LastName;
-                        item.PassWord = Convert.ToInt32(people.Password);
+                        item.PassWord = password;
                         item.Money = people.Money;
                         item.CardNumber = people.CardNumber;
-                        item.CapitalMoney = Convert.ToInt32(people.CapitalMoney);
+                        item.CapitalMoney = Capit;
                         item.Credit = people.Credit;
                         item.CreditPrecent = people.CreditPrecent;
                         item.OpenCard = Convert.ToByte(1);
@@ -74,7 +52,7 @@ namespace Bank_3x
         /// <summary>
         /// база данных через entityFramework
         /// </summary>
-        public static void SqlEntityDownPeople()
+        static public void SqlEntityDownPeople()
         {
             var refresh = MainWindow.entities.People.Join(MainWindow.entities.TypePeople,
                      peopleBD => peopleBD.Type,
@@ -96,6 +74,7 @@ namespace Bank_3x
             List<PeoplePost> people = new List<PeoplePost>();
             foreach (var item in refresh)
             {
+
                 people.Add(new PeoplePost(item.Name.ToString(), item.LastName.ToString(),
 
                 item.PassWord.ToString(), item.CardNumber,
@@ -132,7 +111,7 @@ namespace Bank_3x
         /// </summary>
         /// <param name="e"></param>
         /// <returns></returns>
-        public static int ConBool(bool e)
+        static public int ConBool(bool e)
         {
             if (e == true)
             {
@@ -143,7 +122,31 @@ namespace Bank_3x
                 return 0;
             }
         }
+        /// <summary>
+        /// Создания пользователей в бд
+        /// </summary>
+        static public void SqlCreat()
+        {
+            string text;
+            FileStream stream = new FileStream(NewUSer, FileMode.OpenOrCreate);
+            StreamReader reader = new StreamReader(stream);
+            text = reader.ReadToEnd();
+            string[] vs = text.Split(new char[] { ';' });
 
-
+             List<People> people = new List<People>();
+            foreach(string i in vs)
+            {
+                string textUser = i;
+                string[] vs2 = textUser.Split(new char[] { ',' });
+                people.Add(new People(vs2[0],vs2[1],Convert.ToInt32(vs2[2]),Convert.ToInt32(vs2[3]),Convert.ToInt32(vs2[4]),
+                Convert.ToInt32(vs2[5]), Convert.ToInt32(vs2[6]), Convert.ToInt32(vs2[7]), Convert.ToInt32(vs2[8]),Convert.ToByte(vs2[9])));
+            }
+            foreach(var item in people)
+            {
+                MainWindow.entities.People.Add(item);
+            }
+            MainWindow.entities.SaveChanges();
+        }
+        
     }
 }

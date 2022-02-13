@@ -74,7 +74,7 @@ namespace Bank_3x.FolderPeople
                 string password = Convert.ToString(random.Next(10000, 99999));
                 int CardNumber = random.Next(100000000, 999999999);
                 int money = random.Next(60000, 140000);
-                peoplePost.Add(new legalPeople($"Name_{ID}", $"last_name{ID}", password, CardNumber, money, 0, 0, 0, "legal", ID, true));
+                peoplePost.Add(new LegalPeople($"Name_{ID}", $"last_name{ID}", password, CardNumber, money, 0, 0, 0, "legal", ID, true));
                 ID++;
             }
             for (int w = 0; w < Regular; w++)

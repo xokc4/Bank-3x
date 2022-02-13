@@ -15,49 +15,44 @@ namespace Bank_3x
         /// метод (вклад без капитализации)
         /// </summary>
         /// <param name="MoneyCapit"></param>
-        public static void capitalizationNO(string MoneyCapit)
+        public static void Capitalization(string MoneyCapit, bool Icap)
         {
             foreach (var item in Account.peoplePost)
             {
                 if (MainWindow.Id == item.ID)
                 {
-                    item.Money = item.Money - Convert.ToInt32(MoneyCapit);// снятие денег с счета
-
-                    int MoneyHistori = Convert.ToInt32(MoneyCapit);
-
-                    item.CapitalMoney = Creat.CreatCapitNo(Convert.ToDouble(MoneyCapit));//формула для вклада
-
-
-                    MSG MSGHis = ((int Money) =>//метод по добавлении истории 
+                    int MoneyContent = Convert.ToInt32(MoneyCapit);
+                    if (Icap  == true)
                     {
-                        MainWindow.historis.Add(new Histori("CapitNo", Money, MainWindow.Id));
-                    });
-                    MSGHis(MoneyHistori);
+                        
+                        item.Money = item.Money - MoneyContent;// снятие денег с счета
+
+                        int MoneyHistori = MoneyContent;
+
+                        item.CapitalMoney = Creat.CreatCapitNo(Convert.ToDouble(MoneyCapit));//формула для вклада
+
+
+                        MSG MSGHis = ((int Money) =>//метод по добавлении истории 
+                        {
+                            MainWindow.historis.Add(new Histori("CapitNo", Money, MainWindow.Id));
+                        });
+                        MSGHis(MoneyHistori);
+                    }
+                    if(Icap == false)
+                    {
+                        int MoneyHistor = MoneyContent;
+                        item.Money = item.Money - MoneyContent;
+
+                        item.CapitalMoney = Creat.CreatCapitYES(Convert.ToDouble(MoneyCapit));
+
+                        MSG MSGHis = ((int Money) =>//метод по добавлении истории 
+                        {
+                            MainWindow.historis.Add(new Histori("CapitYes", Money, MainWindow.Id));
+                        });
+                        MSGHis(MoneyHistor);
+                    }
                 }
             }
-        }
-        /// <summary>
-        /// метод (вклад с капитализацией)
-        /// </summary>
-        /// <param name="MoneyCapit"></param>
-        public static void capitalizationYES(string MoneyCapit)
-        {
-            foreach (var item in Account.peoplePost)
-            {
-                if (MainWindow.Id == item.ID)
-                {
-                    int MoneyHistor = Convert.ToInt32(MoneyCapit);
-                    item.Money = item.Money - Convert.ToInt32(MoneyCapit);
-
-                    item.CapitalMoney = Creat.CreatCapitYES(Convert.ToDouble(MoneyCapit));
-
-                    MSG MSGHis = ((int Money) =>//метод по добавлении истории 
-                    {
-                        MainWindow.historis.Add(new Histori("CapitYes", Money, MainWindow.Id));
-                    });
-                    MSGHis(MoneyHistor);
-                }
-            }
-        }
+        }       
     }
 }

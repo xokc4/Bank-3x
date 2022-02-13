@@ -33,29 +33,16 @@ namespace Bank_3x
             InitializeComponent();
         }
         /// <summary>
-        /// условие для выбора метода
-        /// </summary>
-        public void choice()
-        {
-            if(Combobox.SelectedIndex == 0)
-            {
-                capitalizationYES();
-            }
-            if (Combobox.SelectedIndex == 1)
-            {
-                capitalizationNO();
-            }      
-        }
-        /// <summary>
         /// метод (вклад без капитализации)
         /// </summary>
-        public void capitalizationNO()
+        public void CapitalizationMethod()
         {
            
           foreach (var item in Account.peoplePost)
           {
             if(MainWindow.Id == item.ID)
             {
+                    
                     if (item.OpenCard == false)
                     {
                         MessageBox.Show("Ваш аккаунт заблокирован, из-за большого количества переводов денег на другой счет");
@@ -64,13 +51,22 @@ namespace Bank_3x
                     {
                         try 
                         {
-                            if (Convert.ToInt32(MoneyCapit.Text) <= item.Money)// условие для вклада 
+                            int MoneyCapitInt = Convert.ToInt32(MoneyCapit.Text);
+                            bool ComboBox = Convert.ToBoolean(Combobox.SelectedIndex);
+                            if (MoneyCapitInt <= item.Money)// условие для вклада 
                             {
-                                if (Convert.ToInt32(MoneyCapit.Text) > 1000 || Convert.ToInt32(MoneyCapit.Text) == 1000)// условие для размера вклада
+                                if (MoneyCapitInt > 1000 || MoneyCapitInt == 1000)// условие для размера вклада
                                 {
-                                   CapitalizationClass.capitalizationNO(MoneyCapit.Text);
+                                   CapitalizationClass.Capitalization(MoneyCapit.Text, ComboBox);
 
-                                    MoneyEarsCapit.Content = Creat.CreatCapitNo(Convert.ToDouble(MoneyCapit.Text));    
+                                    if(Combobox.SelectedIndex == 1)
+                                    {
+                                        MoneyEarsCapit.Content = Creat.CreatCapitNo(Convert.ToDouble(MoneyCapit.Text));
+                                    }
+                                    if(Combobox.SelectedIndex == 0)
+                                    {
+                                        Creat.CreatCapitYES(Convert.ToDouble(MoneyCapit));
+                                    }  
                                     InfMoneyYears.Content = "будет через 12 месяцев";
                                 }
                                 else
@@ -88,65 +84,19 @@ namespace Bank_3x
                         catch(FormatException)
                         {
                             MoneyCapit.Clear();
-                            MessageBoxWPF.Content = "нужно вписывать числа";
+                            MessageBoxWPF.Content = "нужно вписывать числа или выбрать капитализацию";
                         }
                     }
             }  
           }
         }
-        /// <summary>
-        /// метод (вклад с капитализацией)
-        /// </summary>
-        public void capitalizationYES()
-        {
-            foreach (var item in Account.peoplePost)
-            {
-                if (MainWindow.Id == item.ID)
-                {
-                    if (item.OpenCard == false)
-                    {
-                        MessageBox.Show("Ваш аккаунт заблокирован, из-за большого количества переводов денег на другой счет");
-                    }
-                    else
-                    {
-                        try
-                        {
-                            if (Convert.ToInt32(MoneyCapit.Text) <= item.Money)
-                            {
-                                if (Convert.ToInt32(MoneyCapit.Text) > 1000 || Convert.ToInt32(MoneyCapit.Text) == 1000)
-                                {
-                                   CapitalizationClass.capitalizationYES(MoneyCapit.Text);
-
-                                    MoneyEarsCapit.Content = Creat.CreatCapitYES(Convert.ToDouble(MoneyCapit.Text));
-                                    InfMoneyYears.Content = "будет через 12 месяцев";
-                                }
-                                else
-                                {
-                                    MessageBoxWPF.Content = "Вклады только с 1000р";
-                                }
-                            }
-                            else
-                            {
-                                MessageBoxWPF.Content = "не хватает денег";
-                            }
-                        }
-                        catch (FormatException)
-                        {
-                            MoneyCapit.Clear();
-                            MessageBoxWPF.Content = "нужно вписывать числа";
-                        }
-                    }
-                }
-            }
-        }
-        /// <summary>
         /// при нажатии на кнопку реализуеться метод с выбором вклада
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void ButtonCapit_Click(object sender, RoutedEventArgs e)
         {
-            choice();
+            CapitalizationMethod();
         }
     }
 }

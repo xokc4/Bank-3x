@@ -104,7 +104,6 @@
       <DependentUpon>Credit.xaml</DependentUpon>
     </Compile>
     <Compile Include="FolderPeople\Histori.cs" />
-    <Compile Include="MainLogicWPF.cs" />
     <Compile Include="People.cs">
       <DependentUpon>BankBD.tt</DependentUpon>
     </Compile>
@@ -147,7 +146,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="FolderPeople\Icapitalization.cs" />
-    <Compile Include="FolderPeople\legalPeople.cs" />
+    <Compile Include="FolderPeople\LegalPeople.cs" />
     <Compile Include="FolderPeople\PeoplePost.cs" />
     <Compile Include="FolderPeople\RegularPeople.cs" />
     <Compile Include="FolderPeople\VIPpeople.cs" />

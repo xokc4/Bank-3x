@@ -77,13 +77,13 @@ namespace Bank_3x
                             }     
                             if (eua == false)
                             {
-                             MessageBox.Show("не правильный счет");//сообщение
+                                labelMessege.Content = "не правильный счет";//сообщение
                             }
                         }
                         catch (FormatException)
                         {
                             MoneyTranslate.Clear();
-                            MessageBox.Show("нужно вписывать числа");
+                            labelMessege.Content = "нужно вписывать числа";
                         }
                     }
                 }

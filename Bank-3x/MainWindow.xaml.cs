@@ -82,7 +82,7 @@ namespace Bank_3x
                         {
                             log.Clear();
                             pass.Clear();// удаление введенного пароля
-                            MessageBox.Show("не правильный пароль");//вывод сообщения
+                          MessageException.Text = "не правильный пароль";//вывод сообщения
                         }
                     }
                     if (eas == true)
@@ -90,13 +90,13 @@ namespace Bank_3x
                         log.Clear();
                         pass.Clear();
                         eas = false;
-                        MessageBox.Show("нет такого пользователя");//вывод сообщения
+                        MessageException.Text = "нет такого пользователя";//вывод сообщения
                     }
                 }
                 catch(FormatException)
                 {
                     pass.Clear();
-                    MessageBox.Show("для пароля нужны только цифры");
+                    MessageException.Text = "для пароля нужны только цифры";
                 }
             }
         }
@@ -118,7 +118,7 @@ namespace Bank_3x
                 if (Account.peoplePost.Count < 1)
                 {
                     SqlBDCreat();
-                    MessageBox.Show("Были созданы клиенты для банка, тк не было никого");
+                    MessageException.Text = "Были созданы клиенты для банка, тк не было никого";
                 }
             }
             catch

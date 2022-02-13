@@ -52,9 +52,9 @@ namespace Bank_3x
                         {
                             try
                             {
+                                int MoneyCreditText = Convert.ToInt32(MoneyCredit.Text);
 
-
-                                if (Convert.ToInt32(MoneyCredit.Text) > 100000 || Convert.ToInt32(MoneyCredit.Text) == 100000)// условие минимального кредита
+                                if (MoneyCreditText > 100000 || MoneyCreditText == 100000)// условие минимального кредита
                                 {
                                     double MoneySumm = Convert.ToDouble(MoneyCredit.Text);
                                     double Yuers = Convert.ToDouble(MothEyars.Text);
@@ -87,7 +87,7 @@ namespace Bank_3x
                             {
                                 MoneyCredit.Clear();
                                 MothEyars.Clear();
-                                MessageBox.Show("нужно вписать только числа");
+                                InfCredit.Content = "нужно вписать только числа";
                             }
 
                         }

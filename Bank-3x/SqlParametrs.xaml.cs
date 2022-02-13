@@ -32,7 +32,7 @@ namespace Bank_3x
         private void ClickSave_Click(object sender, RoutedEventArgs e)
         {
             SqlConn.SqlConn.sqlconFile(DataSourse.Text.ToString(), InitialCatalog.Text.ToString(), Convert.ToBoolean(IntegratedSecurity.Text));
-            MessageBox.Show("изменение были совершены, перезапустите приложение");
+            MessageText.Text = "изменение были совершены, перезапустите приложение";
         }
         public void MessageException()
         {

@@ -17,11 +17,12 @@ namespace Bank_3x
             {
                 if (MainWindow.Id == item.ID)
                 {
+                    int Summ = Convert.ToInt32(MoneySumm);
                     item.CreditPrecent = Creat.CreatCredit(MoneySumm, Yuers, bet);
-                    item.Credit = Convert.ToInt32(MoneySumm);
+                    item.Credit = Summ;
                     item.CreditPrecent = Creat.CreatCredit(MoneySumm, Yuers, bet);
-                    item.Money = item.Money + Convert.ToInt32(MoneySumm);
-                    int MoneyCreditMSg = Convert.ToInt32(MoneySumm);
+                    item.Money = item.Money + Summ;
+                    int MoneyCreditMSg = Summ;
                     MSG mSG = ((int MoneyCr) => // метод по добавлении истории
                     {
                         MainWindow.historis.Add(new Histori("Credit", MoneyCr, MainWindow.Id));
